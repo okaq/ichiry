@@ -4,12 +4,12 @@
 package main
 
 import (
-	"bufio"
+	// "bufio"
 	"encoding/json"
 	"fmt"
-	"io"
-	"io/util"
-	"os"
+	// "io"
+	"io/ioutil"
+	// "os"
 )
 
 const (
@@ -18,8 +18,8 @@ const (
 
 // type def for config input
 type Games struct {
-	console string `json:console`
-	dir string `json:dir`
+	Console string `json:console`
+	Dir string `json:dir`
 }
 
 func (g Games) String() string {
@@ -31,7 +31,17 @@ func (g Games) String() string {
 }
 
 func load() {
-	ioutil.ReadAll(CONFIG)
+	b0, err := ioutil.ReadFile(CONFIG)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(string(b0))
+	g0 := make([]Games, 4)
+	json.Unmarshal(b0, &g0)
+	fmt.Println(g0)
+	for _, Game := range g0 {
+		fmt.Println(Game.String())
+	}
 }
 
 func parse() {
