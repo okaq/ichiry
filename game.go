@@ -9,11 +9,16 @@ import (
 	"fmt"
 	// "io"
 	"io/ioutil"
-	// "os"
+	"os"
 )
 
 const (
 	CONFIG = "config.js"
+	NUM = 4
+)
+
+var (
+	Archive map[string][]os.FileInfo
 )
 
 // type def for config input
@@ -36,7 +41,7 @@ func load() {
 		fmt.Println(err)
 	}
 	fmt.Println(string(b0))
-	g0 := make([]Games, 4)
+	g0 := make([]Games, NUM)
 	json.Unmarshal(b0, &g0)
 	fmt.Println(g0)
 	for _, Game := range g0 {
@@ -45,7 +50,7 @@ func load() {
 }
 
 func parse() {
-
+	Archive = make(map[string][]os.FileInfo)
 }
 
 func main() {
