@@ -18,16 +18,17 @@ const (
 )
 
 var (
+	Games []Game
 	Archive map[string][]os.FileInfo
 )
 
 // type def for config input
-type Games struct {
+type Game struct {
 	Console string `json:console`
 	Dir string `json:dir`
 }
 
-func (g Games) String() string {
+func (g Game) String() string {
 	b0, err := json.Marshal(g)
 	if err != nil {
 		fmt.Println(err)
@@ -41,16 +42,25 @@ func load() {
 		fmt.Println(err)
 	}
 	fmt.Println(string(b0))
-	g0 := make([]Games, NUM)
-	json.Unmarshal(b0, &g0)
-	fmt.Println(g0)
-	for _, Game := range g0 {
-		fmt.Println(Game.String())
+	Games = make([]Game, NUM)
+	json.Unmarshal(b0, &Games)
+	fmt.Println(Games)
+	for _, g0 := range Games {
+		fmt.Println(g0.String())
 	}
 }
 
 func parse() {
 	Archive = make(map[string][]os.FileInfo)
+	for _, g0 := range Games {
+		k0 := g0.Console
+		d0 := g0.Dir
+		f0, err := ioutil.ReadDir(d0)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(k0,len(f0))
+	}
 }
 
 func main() {
