@@ -60,13 +60,39 @@ func parse() {
 			fmt.Println(err)
 		}
 		fmt.Println(k0,len(f0))
+		Archive[k0] = f0
 	}
+}
+
+func output() {
+	// new json game data
+	// format for html
+	// write to disk
+	for k0, v0 := range Archive {
+		fmt.Println(k0, len(v0))
+		for i0, f0 := range v0 {
+			b0, err := json.Marshal(f0)
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println(i0)
+			fmt.Println(f0.Name())
+			fmt.Printf("%d\n", f0.Size())
+			fmt.Printf("%v\n", f0.ModTime())
+			fmt.Println(len(b0))
+		}
+	}
+	// flatten to map[string]string
+	// resolve full filepath = dir + name
+	// include size on disk
+	// encode to json array of strings
 }
 
 func main() {
 	// parse json
 	load()
 	parse()
+	output()
 }
 
 
