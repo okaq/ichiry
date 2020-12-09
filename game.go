@@ -20,6 +20,7 @@ const (
 var (
 	Games []Game
 	Archive map[string][]os.FileInfo
+	Flat map[string]string
 )
 
 // type def for config input
@@ -88,11 +89,30 @@ func output() {
 	// encode to json array of strings
 }
 
+func output2() {
+	// flat key value
+	// get file paths
+	f0 := paths()
+	fmt.Println(f0)
+}
+
+func paths() []string {
+	p0 := make([]string, 1)
+	for _, g0 := range Games {
+		d0 := g0.Dir
+		k0 := g0.Console
+		p1 := Archive[k0]
+		fmt.Println(d0,k0,len(p1))
+	}
+	return p0
+}
+
 func main() {
 	// parse json
 	load()
 	parse()
 	output()
+	output2()
 }
 
 
