@@ -103,7 +103,18 @@ func paths() []string {
 		k0 := g0.Console
 		p1 := Archive[k0]
 		fmt.Println(d0,k0,len(p1))
+		for _, p2 := range p1 {
+			if p2.IsDir() == true {
+				continue
+			}
+			f0 := p2.Name()
+			f1 := fmt.Sprintf("%s/%s", d0, f0)
+			f2 := fmt.Sprintf("%v|%s", p2.Size(), p2.ModTime().String())
+			f3 := fmt.Sprintf("%s|%s", f1, f2)
+			p0 = append(p0,f3)
+		}
 	}
+	fmt.Println(p0)
 	return p0
 }
 
