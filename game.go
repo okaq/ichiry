@@ -10,6 +10,7 @@ import (
 	// "io"
 	"io/ioutil"
 	"os"
+	"strings"
 )
 
 const (
@@ -94,6 +95,19 @@ func output2() {
 	// get file paths
 	f0 := paths()
 	fmt.Println(f0)
+	Flat = make(map[string]string)
+	for _, f1 := range f0 {
+		f2 := strings.Split(f1, "|")
+		if len(f2) < 3 {
+			// fmt.Println("data length error")
+			// fmt.Println(f2)
+			continue
+		}
+		k0 := f2[0]
+		v0 := fmt.Sprintf("%s|%s", f2[1], f2[2])
+		Flat[k0] = v0
+	}
+	fmt.Println(Flat)
 }
 
 func paths() []string {
@@ -114,7 +128,7 @@ func paths() []string {
 			p0 = append(p0,f3)
 		}
 	}
-	fmt.Println(p0)
+	// fmt.Println(p0)
 	return p0
 }
 
