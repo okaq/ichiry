@@ -16,6 +16,7 @@ import (
 const (
 	CONFIG = "config.js"
 	NUM = 4
+	OUTPUT = "cares.js"
 )
 
 var (
@@ -132,12 +133,29 @@ func paths() []string {
 	return p0
 }
 
+func store() {
+	// encode json
+	// write to output file
+	b0, err := json.Marshal(Flat)
+	if err != nil {
+		fmt.Println(err)
+	}
+	err2 := ioutil.WriteFile(OUTPUT, b0, 0644)
+	if err2 != nil {
+		fmt.Println(err2)
+	}
+	// flat key value store
+	// on load json game data
+	// create and sort lists by console
+}
+
 func main() {
 	// parse json
 	load()
 	parse()
 	output()
 	output2()
+	store()
 }
 
 
