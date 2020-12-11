@@ -11,6 +11,7 @@ import (
 
 const (
 	INDEX = "web.html"
+	GAMES = "cares.js"
 )
 
 func motd() {
@@ -23,9 +24,15 @@ func WebHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w,r,INDEX)
 }
 
+func GamesHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r)
+	http.ServeFile(w,r,GAMES)
+}
+
 func main() {
 	motd()
 	http.HandleFunc("/", WebHandler)
+	http.HandleFunc("/a", GamesHandler)
 	http.ListenAndServe(":8080", nil)
 }
 
