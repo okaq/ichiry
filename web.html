@@ -31,9 +31,31 @@ var g = {
         "init": function() {
             var t0 = window.performance.now();
             console.log("start ichiry...");
-		g.subs = [dom];
+		g.subs = [dom,sce];
 		g.subs.forEach(function(el){el.init();});
-    }
+
+		// begin
+		window.setTimeout(g.start, 1000);
+    },
+	"start": function() {
+		ren.bkgd();
+	}
+}
+// scene
+var sce = {
+	"init": function() {
+		sce.a = {};
+		sce.a.r = [1920,1080,0,0];
+		sce.a.c = dom.canvas(sce.a.r);
+		dom.add(sce.a.c);
+	}
+}
+// render
+var ren = {
+	"bkgd": function() {
+		sce.a.c.con.fillStyle = rgba.rand();
+		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+	}
 }
    // dom
    var dom = {
