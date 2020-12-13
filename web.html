@@ -39,7 +39,20 @@ var g = {
     },
 	"start": function() {
 		ren.bkgd();
-	}
+
+        // fetch games
+        window.setTimeout(g.exit, 1000);
+	},
+    "exit": function() {
+        // async json load and parse
+        g.treat = async function() {
+            const res = await window.fetch("http://localhost:8080/a");
+            const json = await res.json();
+            console.log(json);
+        }
+        g.treat();
+        // fetch'd 555 kB game data
+    }
 }
 // scene
 var sce = {
