@@ -31,7 +31,7 @@ var g = {
         "init": function() {
             var t0 = window.performance.now();
             console.log("start ichiry...");
-		g.subs = [dom,sce];
+		g.subs = [dom,sce,net];
 		g.subs.forEach(function(el){el.init();});
 
 		// begin
@@ -41,7 +41,7 @@ var g = {
 		ren.bkgd();
 
         // fetch games
-        window.setTimeout(g.exit, 1000);
+        window.setTimeout(g.exit2, 1000);
 	},
     "exit": function() {
         // async json load and parse
@@ -52,6 +52,9 @@ var g = {
         }
         g.treat();
         // fetch'd 555 kB game data
+    },
+    "exit2": function() {
+        net.treat();
     }
 }
 // scene
@@ -69,6 +72,22 @@ var ren = {
 		sce.a.c.con.fillStyle = rgba.rand();
 		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
 	}
+}
+// xhr
+var net  = {
+    "init": function() {
+        // urls
+        net.a = [];
+        net.a[0] = "http://localhost:8080/a";
+
+    },
+    "treat": async function() {
+        const res = await window.fetch(net.a[0]);
+        net.b = await res.json();
+        net.c = JSON.stringify(net.b);
+        // console.log(net.b,net.c);
+        // process data and pop dom
+    }
 }
    // dom
    var dom = {
