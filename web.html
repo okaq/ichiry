@@ -102,6 +102,14 @@ var db = {
         // process the game data
         // if called within await,
         // does it need to be async?
+
+        // initial pass to parse raw json
+        for (var k0 in net.b) {
+            let v0 = net.b[k0];
+            let s0 = v0.split("|");
+            let s1 = k0.split("/");
+            console.log(k0,v0,s0,s1);
+        }
     }
 }
    // dom
