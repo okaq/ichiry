@@ -31,7 +31,7 @@ var g = {
         "init": function() {
             var t0 = window.performance.now();
             console.log("start ichiry...");
-		g.subs = [dom,sce,net];
+		g.subs = [dom,sce,net,db];
 		g.subs.forEach(function(el){el.init();});
 
 		// begin
@@ -87,6 +87,21 @@ var net  = {
         net.c = JSON.stringify(net.b);
         // console.log(net.b,net.c);
         // process data and pop dom
+        net.d = await db.proc();
+    }
+}
+// data
+var db = {
+    "init": function() {
+        // game data
+        db.a = {};
+        // game state data
+        db.b = {};
+    },
+    "proc": function() {
+        // process the game data
+        // if called within await,
+        // does it need to be async?
     }
 }
    // dom
