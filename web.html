@@ -55,6 +55,11 @@ var g = {
     },
     "exit2": function() {
         net.treat();
+    },
+    "rove": function() {
+        console.log("net data loaded");
+        console.log("populating page elements");
+        sce.pop();
     }
 }
 // scene
@@ -64,7 +69,19 @@ var sce = {
 		sce.a.r = [1920,1080,0,0];
 		sce.a.c = dom.canvas(sce.a.r);
 		dom.add(sce.a.c);
-	}
+	},
+    "pop": function() {
+        // metadata
+        sce.b = []; // counts
+        sce.c = 0; // total
+        for (let i = 0; i < db.d.length; i++) {
+            let k0 = db.d[i];
+            let c0 = db.c[k0].length;
+            sce.b[i] = c0;
+            sce.c = sce.c + c0;
+        }
+        console.log(db.d, sce.b, sce.c);
+    }
 }
 // render
 var ren = {
@@ -88,6 +105,9 @@ var net  = {
         // console.log(net.b,net.c);
         // process data and pop dom
         net.d = await db.proc();
+
+        // return async
+        window.setTimeout(g.rove, 1000);
     }
 }
 // data
@@ -119,7 +139,7 @@ var db = {
         for (var k0 in db.c) {
             db.d.push(k0);
         }
-        console.log(db.d);
+        // console.log(db.d);
         // second pass to collect
         for (var k0 in net.b) {
             let v0 = net.b[k0];
@@ -127,7 +147,10 @@ var db = {
             let k1 = s0[6];
             db.c[k1].push(k0);
         }
-        console.log(db.c);
+        // console.log(db.c);
+        
+        // auto reflect class from json raw data
+        // and populate collections, indexes
     }
 }
    // dom
