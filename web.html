@@ -97,6 +97,9 @@ var db = {
         db.a = {};
         // game state data
         db.b = {};
+        // indexes
+        db.c = {}; // console:key
+        db.d = []; // console list
     },
     "proc": function() {
         // process the game data
@@ -108,8 +111,23 @@ var db = {
             let v0 = net.b[k0];
             let s0 = v0.split("|");
             let s1 = k0.split("/");
-            console.log(k0,v0,s0,s1);
+            // console.log(k0,v0,s0,s1);
+            let k1 = s1[6]; // console
+            db.c[k1] = [];
         }
+        // console.log(db.c);
+        for (var k0 in db.c) {
+            db.d.push(k0);
+        }
+        console.log(db.d);
+        // second pass to collect
+        for (var k0 in net.b) {
+            let v0 = net.b[k0];
+            let s0 = k0.split("/");
+            let k1 = s0[6];
+            db.c[k1].push(k0);
+        }
+        console.log(db.c);
     }
 }
    // dom
