@@ -81,6 +81,26 @@ var sce = {
             sce.c = sce.c + c0;
         }
         console.log(db.d, sce.b, sce.c);
+
+        window.setTimeout(sce.pop2, 1000);
+    },
+    "pop2": function() {
+        // text canvas blocks
+        sce.d = {};
+        for (let i = 0; i < db.d.length; i++) {
+            let k0 = db.d[i];
+            let g0 = db.c[k0];
+            for (let j = 0; j < g0.length; j++) {
+                let k1 = g0[j];
+                // canvas object
+                sce.d[k1] = {};
+                sce.d[k1].r = [];
+                sce.d[k1].c = [];
+                sce.d[k1].d = [];
+                // header
+                // game list
+            }
+        }
     }
 }
 // render
