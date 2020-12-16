@@ -87,28 +87,47 @@ var sce = {
     "pop2": function() {
         // resize body
         dom.remove(sce.a.c);
-        let h0 = ((sce.c + 4) * 64) >>> 0;
-        dom.alpha.height = h0;
-        sce.a.r = [1920,h0,0,0];
-        sce.a.c = dom.canvas(sce.a.r);
-        dom.add(sce.a.c);
-        ren.bkgd();
-        // canvas max 32,767px
+        let h0 = 96;
+        let h1 = 16;
+        let h2 = (h0 - (2 * h1)) >>> 0;
+        let h3 = ((sce.c + 4) * 96) >>> 0;
+        // dom.alpha.height = h0;
+        // sce.a.r = [1920,h0,0,0];
+        // sce.a.c = dom.canvas(sce.a.r);
+        // dom.add(sce.a.c);
+        // ren.bkgd();
+        // canvas max 32,767 px
+        dom.alpha.height = h3;
+        // block text 64 px, margin 16 px
         // text canvas blocks
         sce.d = {};
+        let h4 = 0; // accumulator
         for (let i = 0; i < db.d.length; i++) {
             let k0 = db.d[i];
             let g0 = db.c[k0];
+            // canvas game list
+            sce.d[k0] = {};
+            sce.d[k0].r = [];
+            sce.d[k0].c = [];
+            sce.d[k0].d = [];
+            // include header, game index offset +1
+            sce.d[k0].r[0] = [1920,h0,0,h4];
+            sce.d[k0].c[0] = dom.canvas(sce.d[k0].r[0]);
+            sce.d[k0].d[0] = [rgba.rand()];
+            // mouse event listener
+            dom.add(sce.d[k0].c[0]);
             for (let j = 0; j < g0.length; j++) {
                 let k1 = g0[j];
                 // canvas object
-                sce.d[k1] = {};
-                sce.d[k1].r = [];
-                sce.d[k1].c = [];
-                sce.d[k1].d = [];
-                // header
+                // sce.d[k1] = {};
+                // sce.d[k1].r = [];
+                // sce.d[k1].c = [];
+                // sce.d[k1].d = [];
 
                 // game list
+
+                // accumulate height
+                h4 = h4 + h0;
             }
         }
     }
