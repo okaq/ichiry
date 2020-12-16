@@ -85,6 +85,15 @@ var sce = {
         window.setTimeout(sce.pop2, 1000);
     },
     "pop2": function() {
+        // resize body
+        dom.remove(sce.a.c);
+        let h0 = ((sce.c + 4) * 64) >>> 0;
+        dom.alpha.height = h0;
+        sce.a.r = [1920,h0,0,0];
+        sce.a.c = dom.canvas(sce.a.r);
+        dom.add(sce.a.c);
+        ren.bkgd();
+        // canvas max 32,767px
         // text canvas blocks
         sce.d = {};
         for (let i = 0; i < db.d.length; i++) {
@@ -98,6 +107,7 @@ var sce = {
                 sce.d[k1].c = [];
                 sce.d[k1].d = [];
                 // header
+
                 // game list
             }
         }
