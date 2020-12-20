@@ -60,6 +60,13 @@ var g = {
         console.log("net data loaded");
         console.log("populating page elements");
         sce.pop();
+    },
+    "pump": function() {
+        console.log("render text blocks test");
+        // ren.blocks();
+        // no go! 4000 canvas draw calls hits the limit
+        // use div text and pagination instead
+        // per console navi buttons
     }
 }
 // scene
@@ -91,6 +98,7 @@ var sce = {
         let h1 = 16;
         let h2 = (h0 - (2 * h1)) >>> 0;
         let h3 = ((sce.c + 4) * 96) >>> 0;
+        // size params as metadata for renderer
         // dom.alpha.height = h0;
         // sce.a.r = [1920,h0,0,0];
         // sce.a.c = dom.canvas(sce.a.r);
@@ -113,11 +121,15 @@ var sce = {
             // include header, game index offset +1
             sce.d[k0].r[0] = [1920,h0,0,h4];
             sce.d[k0].c[0] = dom.canvas(sce.d[k0].r[0]);
-            sce.d[k0].d[0] = [rgba.rand()];
+            sce.d[k0].d[0] = [rgba.rand(),rgba.rand()]; // back, text colors
             // mouse event listener
             dom.add(sce.d[k0].c[0]);
             for (let j = 0; j < g0.length; j++) {
+                // accumulate height
+                h4 = h4 + h0;
+                
                 let k1 = g0[j];
+
                 // canvas object
                 // sce.d[k1] = {};
                 // sce.d[k1].r = [];
@@ -125,11 +137,16 @@ var sce = {
                 // sce.d[k1].d = [];
 
                 // game list
-
-                // accumulate height
-                h4 = h4 + h0;
+                let j0 = j + 1;
+                sce.d[k0].r[j0] = [1920,h0,0,h4];
+                sce.d[k0].c[j0] = dom.canvas(sce.d[k0].r[j0]);
+                sce.d[k0].d[j0] = [rgba.rand(),rgba.rand()];
+                // mouse event listener
+                dom.add(sce.d[k0].c[j0]);
             }
         }
+        // return control to game for render test
+        window.setTimeout(g.pump, 1000);
     }
 }
 // render
@@ -137,7 +154,21 @@ var ren = {
 	"bkgd": function() {
 		sce.a.c.con.fillStyle = rgba.rand();
 		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
-	}
+	},
+    "blocks": function() {
+        for (var k0 in sce.d) {
+            let c0 = sce.d[k0].c;
+            for (let i = 0; i < c0.length; i++) {
+                let c1 = sce.d[k0].c[i];
+                let d0 = sce.d[k0].d[i][0];
+                let d1 = sce.d[k0].d[i][1];
+                c1.con.fillStyle = d0;
+                c1.con.fillRect(0,0,c1.can.width,c1.can.height);
+                c1.con.fillStyle = d1;
+                c1.con.fillRect(16,16,c1.can.width-32,c1.can.height-32);
+            }
+        }
+    }
 }
 // xhr
 var net  = {
