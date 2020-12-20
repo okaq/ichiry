@@ -1,37 +1,35 @@
-// golang web server for google cloud
-// okaq.funka
-// Tue Jan 21, 2014
-package web
+// okaq.com home site web server
+// google cloud app engine
+// golang version 1.14
+// aq@okaq.com
+// 2020-12-20
+package main
 
 import (
-    "io/ioutil"
-    "log"
-    "net/http"
-    "appengine"
+	"log"
+	"net/http"
+	"os"
 )
 
 const (
-    PATH = "index.html"
+	INDEX = "index.html"
 )
 
-var (
-    Data []byte
-    err error
-)
+func WebHandler(w http.ResponseWriter, r *http.Request) {
+	// log req
+	http.ServeFile(w,r,INDEX)
+}
 
-func init() {
-    // cache single page html webapp
-    Data, err = ioutil.ReadFile(PATH)
-    if err != nil {
-        log.Fatal(err)
-    }
-    // http handler
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        w.Write(Data)
-        // logging
-        c := appengine.NewContext(r)
-        c.Infof("okaq.funka: hello %s", r.RemoteAddr)
-    })
+func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	http.HandleFunc("/", WebHandler)
+	log.Printf("listening on localhost:%s", port)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
+		log.Fatal(err)
+	}
 }
 
 
