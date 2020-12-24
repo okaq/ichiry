@@ -4,9 +4,9 @@
         <title>okaq</title>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
         <meta name="viewport" content="width=1920,height=1080,initial-scale=1" />
-        <meta name="source" content="https://github.com/okaq/okaq.funka" />
+        <meta name="source" content="https://github.com/okaq/ichiry" />
         <meta name="creator" content="AQ<aq@okaq.com>" />
-        <meta name="date" content="2015-12-02" />
+        <meta name="date" content="2020-12-22" />
         <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAMklEQVR4nGKRNH/IQEvARFPTRy0YtWDUglELRi0YtWDUglELRi0YtWDUAioCQAAAAP//JGYBdI4ZOy8AAAAASUVORK5CYII=" />
         <style type="text/css">
             html,body{width:1920px;height:1080px;margin:0px;padding:0px;border:0px;background-color:rgba(255,255,255,1.0);}
@@ -26,21 +26,12 @@ var a = {
         a.start = window.performance.now();
 
         // subsystems
-        a.subs = [dom,lay,sce,bmp];
+        a.subs = [dom,sce,bmp];
         a.subs.forEach(function(el){el.init();});
 
-        // data
-        a.tick = 0;
-        a.data = a.shuf();
-        a.text = ["o","k","a","q"];
-
-        // first render
-        // ren.clear();
-        // ren.bkgd();
-        // ren.data();
-        // a.ren();
-
         // cycle
+	    a.tick = 0;
+	    a.max = 16;
         a.id = window.setInterval(a.cyc, 1000);
 
         // stats
@@ -49,17 +40,40 @@ var a = {
         console.log("total load time: " + total + "ms.");
  
     },
-    "ren": function() {
-        // clear and draw bkgd and data
-        ren.clear();
-        ren.bkgd();
-        ren.data();
-    },
     "cyc": function() {
-        // random bit filp
-        var f0 = (Math.random() * 4) >>> 0;
-        a.data[f0] = (a.data[f0] == 1) ? 0 : 1;
+	    if (a.tick >= a.max) {
+	    	console.log("anim done");
+		window.clearInterval(a.id);
+		return;
+	    }
+	    sce.update();
+	    ren.data();
+	    a.tick = a.tick + 1;
     }
+}
+// scene
+var sce = {
+	"init": function() {
+		sce.a = {};
+		sce.a.r = [1920,1080,0,0];
+		sce.a.c = dom.canvas(sce.a.r);
+		sce.a.d = rgba.rand();
+		sce.a.c.can.addEventListener("click", sce.click, false);
+		sce.a.c.can.dataset.x = "farn";
+		dom.add(sce.a.c);
+	},
+	"click": function(e) {
+		console.log(e);
+		console.log(e.target.dataset.x);
+	}
+}
+// render
+var ren = {
+	"data": function() {
+		// over collection
+		sce.a.c.con.fillStyle = sce.a.d;
+		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+	}
 }
 // dom
 var dom = {
