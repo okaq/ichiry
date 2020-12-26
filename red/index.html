@@ -58,6 +58,7 @@ var a = {
 			window.clearInterval(a.id);
 			return;
 		}
+		console.log("tick count: " + a.tick);
 		sce.frame();
 		sce.bound();
 		ren.lines();
@@ -86,13 +87,15 @@ var sce = {
 		sce.d = {};
 		sce.d.w = 1920;
 		sce.d.h = 1080;
+
+		sce.line();
 	},
 	"line": function() {
 		// line test
 		// pos
-		sce.b = [];
-		sce.b[0] = sce.puff();
-		sce.b[1] = sce.puff();
+		sce.b = sce.puff();
+		// sce.b[0] = sce.puff();
+		// sce.b[1] = sce.puff();
 		// speed
 		sce.c = [];
 		sce.c[0] = (((Math.random() * 4) - 2) >>> 0);
@@ -167,9 +170,21 @@ var ren = {
 		sce.a.c.con.fillStyle = sce.a.d;
 		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
 	},
-	"line": function() {
+	"lines": function() {
 		// des: black back ground
 		// thick 4px width white line draw as filled rects
+		ren.clear();
+		sce.a.c.con.beginPath();
+		sce.a.c.con.strokeStyle = rgba.css([255,255,255,1.0]);
+		sce.a.c.con.moveTo(0,0);
+		sce.a.c.con.lineTo(sce.b[0],sce.b[1]);
+		console.log(sce.b);
+		sce.a.c.con.lineWidth = 4;
+		sce.a.c.con.stroke();
+	},
+	"clear": function() {
+		sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0]);
+		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
 	}
 }
 // dom
