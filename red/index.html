@@ -61,10 +61,37 @@ var sce = {
 		sce.a.c.can.addEventListener("click", sce.click, false);
 		sce.a.c.can.dataset.x = "farn";
 		dom.add(sce.a.c);
+
+		sce.meta();
 	},
 	"click": function(e) {
 		console.log(e);
 		console.log(e.target.dataset.x);
+	},
+	"meta": function() {
+		// globals
+		sce.c = {};
+		sce.c.w = 1920;
+		sce.c.h = 1080;
+	},
+	"line": function() {
+		// line test
+		sce.b = [];
+		sce.b[0] = sce.puff();
+		sce.b[1] = sce.puff();
+	},
+	"word": function() {
+		// word test
+	},
+	"update": function() {
+		// line data in db
+	},
+	"puff": function() {
+		// random point set
+		let p0 = [];
+		p0[0] = (Math.random() * sce.c.w) >>> 0;
+		p0[1] = (Math.random() * sce.c.h) >>> 0;
+		return p0;
 	}
 }
 // render
