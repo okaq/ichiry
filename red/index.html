@@ -94,12 +94,36 @@ var sce = {
 		return p0;
 	}
 }
+// data
+var db = {
+	"init": function() {
+		// key value master
+		db.a = {};
+	},
+	"clock": function() {
+		// series of rotating lines
+		// and coordinate transforms
+	}
+}
+// math
+var math = {
+	"polar": function(x0,y0) {
+		// cartesian to polar
+	},
+	"cart": function(r0,a0) {
+		// polar to cartesian
+	}
+}
 // render
 var ren = {
 	"data": function() {
 		// over collection
 		sce.a.c.con.fillStyle = sce.a.d;
 		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+	},
+	"line": function() {
+		// des: black back ground
+		// thick 4px width white line draw as filled rects
 	}
 }
 // dom
