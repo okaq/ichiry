@@ -83,15 +83,20 @@ var sce = {
 	},
 	"meta": function() {
 		// globals
-		sce.c = {};
-		sce.c.w = 1920;
-		sce.c.h = 1080;
+		sce.d = {};
+		sce.d.w = 1920;
+		sce.d.h = 1080;
 	},
 	"line": function() {
 		// line test
+		// pos
 		sce.b = [];
 		sce.b[0] = sce.puff();
 		sce.b[1] = sce.puff();
+		// speed
+		sce.c = [];
+		sce.c[0] = (((Math.random() * 4) - 2) >>> 0);
+		sce.c[1] = (((Math.random() * 4) - 2) >>> 0);
 	},
 	"word": function() {
 		// word test
@@ -102,9 +107,37 @@ var sce = {
 	"puff": function() {
 		// random point set
 		let p0 = [];
-		p0[0] = (Math.random() * sce.c.w) >>> 0;
-		p0[1] = (Math.random() * sce.c.h) >>> 0;
+		p0[0] = (Math.random() * sce.d.w) >>> 0;
+		p0[1] = (Math.random() * sce.d.h) >>> 0;
 		return p0;
+	},
+	"frame": function() {
+		// bouncing round the room
+		let x0 = sce.b[0];
+		let x1 = x0 + sce.c[0];
+		let y0 = sce.b[1];
+		let y1 = y0 + sce.c[1];
+		sce.b[0] = x1;
+		sce.b[1] = y1;
+	},
+	"bound": function() {
+		// clip to screen space
+		if (sce.b[0] >= sce.d.w) {
+			sce.b[0] = sce.d.w - 1;
+			sce.c[0] = -sce.c[0];
+		}
+		if (sce.b[0] <= 0) {
+			sce.b[0] = 1;
+			sce.c[0] = -sce.c[0];
+		}
+		if (sce.b[1] >= sce.d.h) {
+			sce.b[1] = sce.d.h - 1;
+			sce.c[1] = -sce.c[1];
+		}
+		if (sce.b[1] <= 0) {
+			sce.b[1] = 1;
+			sce.c[1] = -sce.c[1];
+		}
 	}
 }
 // data
