@@ -26,13 +26,15 @@ var a = {
         a.start = window.performance.now();
 
         // subsystems
-        a.subs = [dom,sce,bmp];
+        a.subs = [dom,sce,bmp,db];
         a.subs.forEach(function(el){el.init();});
 
         // cycle
 	    a.tick = 0;
-	    a.max = 16;
-        a.id = window.setInterval(a.cyc, 1000);
+	    // a.max = 16;
+        // a.id = window.setInterval(a.cyc, 1000);
+	    a.max = 64;
+	    a.id = window.setInterval(a.cyc2, 1000);
 
         // stats
         var done = window.performance.now();
@@ -49,7 +51,18 @@ var a = {
 	    sce.update();
 	    ren.data();
 	    a.tick = a.tick + 1;
-    }
+    },
+	"cyc2": function() {
+		if (a.tick >= a.max) {
+			console.log("anim done");
+			window.clearInterval(a.id);
+			return;
+		}
+		sce.frame();
+		sce.bound();
+		ren.lines();
+		a.tick = a.tick + 1;
+	}
 }
 // scene
 var sce = {
