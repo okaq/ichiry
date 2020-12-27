@@ -77,6 +77,7 @@ var a = {
 		} else {
 			sce.pure2();
 		}
+		ren.world();
 		a.tick = a.tick + 1;
 	}
 }
@@ -158,9 +159,10 @@ var sce = {
 		}
 	},
 	"pure": function() {
-
+		db.brush();
 	},
 	"pure2": function() {
+		db.blot();
 	}
 }
 // data
@@ -192,8 +194,8 @@ var db = {
 	},
 	"rand": function() {
 		let p0 = [];
-		let p0[0] = db.rand2();
-		let p0[1] = db.rand2();
+		p0[0] = db.rand2();
+		p0[1] = db.rand2();
 		return p0;
 	},
 	"rand2": function() {
@@ -233,6 +235,22 @@ var ren = {
 	"clear": function() {
 		sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0]);
 		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+	},
+	"world": function() {
+		ren.clear();
+		console.log(db.b);
+		for (let i = 0; i < db.b.length; i++) {
+			ren.line(db.b[i].a0);
+		}
+	},
+	"line": function(p0) {
+		console.log(p0);
+		sce.a.c.con.strokeStyle = rgba.css([255,255,255,1.0]);
+		sce.a.c.con.lineWidth = 4;
+		sce.a.c.con.beginPath();
+		sce.a.c.con.moveTo(p0[0][0],p0[0][1]);
+		sce.a.c.con.lineTo(p0[1][0],p0[1][1]);
+		sce.a.c.con.stroke();
 	}
 }
 // dom
