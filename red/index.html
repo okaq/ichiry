@@ -34,7 +34,8 @@ var a = {
 	    // a.max = 16;
         // a.id = window.setInterval(a.cyc, 1000);
 	    a.max = 64;
-	    a.id = window.setInterval(a.cyc2, 1000);
+	    // a.id = window.setInterval(a.cyc2, 1000);
+	    a.id = window.setInterval(a.cyc3, 1000);
 
         // stats
         var done = window.performance.now();
@@ -62,6 +63,20 @@ var a = {
 		sce.frame();
 		sce.bound();
 		ren.lines();
+		a.tick = a.tick + 1;
+	},
+	"cyc3": function() {
+		if (a.tick >= a.max) {
+			console.log("anim done");
+			window.clearInterval(a.id);
+			return;
+		}
+		console.log("tick count: " + a.tick);
+		if (a.tick <= (a.max / 2)) {
+			sce.pure();
+		} else {
+			sce.pure2();
+		}
 		a.tick = a.tick + 1;
 	}
 }
@@ -141,6 +156,11 @@ var sce = {
 			sce.b[1] = 1;
 			sce.c[1] = -sce.c[1];
 		}
+	},
+	"pure": function() {
+
+	},
+	"pure2": function() {
 	}
 }
 // data
@@ -163,6 +183,12 @@ var db = {
 		p0.a0[0] = db.rand();
 		p0.a0[1] = db.rand();
 		db.b.push(p0);
+	},
+	"blot": function() {
+		// pop the last line off
+		if (db.b.length >= 1) {
+			db.b = db.b.slice(0, db.b.length - 1);
+		}
 	},
 	"rand": function() {
 		let p0 = [];
