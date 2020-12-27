@@ -148,10 +148,32 @@ var db = {
 	"init": function() {
 		// key value master
 		db.a = {};
+		// line collection
+		db.b = [];
 	},
 	"clock": function() {
 		// series of rotating lines
 		// and coordinate transforms
+	},
+	"brush": function() {
+		// add a random line to the collection
+		// line def: p0.a0 vertex list
+		let p0 = {};
+		p0.a0 = [];
+		p0.a0[0] = db.rand();
+		p0.a0[1] = db.rand();
+		db.b.push(p0);
+	},
+	"rand": function() {
+		let p0 = [];
+		let p0[0] = db.rand2();
+		let p0[1] = db.rand2();
+		return p0;
+	},
+	"rand2": function() {
+		let p0 = [];
+		p0[0] = (Math.random() * 1920) >>> 0;
+		p0[1] = (Math.random() * 1080) >>> 0;
 	}
 }
 // math
