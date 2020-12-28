@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=1920,height=1080,initial-scale=1" />
         <meta name="source" content="https://github.com/okaq/ichiry" />
         <meta name="creator" content="AQ<aq@okaq.com>" />
-        <meta name="date" content="2020-12-28" />
+        <meta name="date" content="2020-12-22" />
         <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAMklEQVR4nGKRNH/IQEvARFPTRy0YtWDUglELRi0YtWDUglELRi0YtWDUAioCQAAAAP//JGYBdI4ZOy8AAAAASUVORK5CYII=" />
         <style type="text/css">
             html,body{width:1920px;height:1080px;margin:0px;padding:0px;border:0px;background-color:rgba(255,255,255,1.0);}
@@ -31,8 +31,11 @@ var a = {
 
         // cycle
 	    a.tick = 0;
+	    // a.max = 16;
+        // a.id = window.setInterval(a.cyc, 1000);
 	    a.max = 64;
-	    a.id = window.setInterval(a.cyc, 1000);
+	    // a.id = window.setInterval(a.cyc2, 1000);
+	    a.id = window.setInterval(a.cyc3, 1000);
 
         // stats
         var done = window.performance.now();
@@ -46,12 +49,212 @@ var a = {
 		window.clearInterval(a.id);
 		return;
 	    }
+	    sce.update();
+	    ren.data();
 	    a.tick = a.tick + 1;
-    }
+    },
+	"cyc2": function() {
+		if (a.tick >= a.max) {
+			console.log("anim done");
+			window.clearInterval(a.id);
+			return;
+		}
+		console.log("tick count: " + a.tick);
+		sce.frame();
+		sce.bound();
+		ren.lines();
+		a.tick = a.tick + 1;
+	},
+	"cyc3": function() {
+		if (a.tick >= a.max) {
+			console.log("anim done");
+			window.clearInterval(a.id);
+			return;
+		}
+		console.log("tick count: " + a.tick);
+		if (a.tick <= ((a.max / 2) - 1)) {
+			sce.pure();
+		} else {
+			sce.pure2();
+		}
+		ren.world();
+		a.tick = a.tick + 1;
+	}
 }
 // scene
 var sce = {
 	"init": function() {
+		sce.a = {};
+		sce.a.r = [1920,1080,0,0];
+		sce.a.c = dom.canvas(sce.a.r);
+		sce.a.d = rgba.rand();
+		sce.a.c.can.addEventListener("click", sce.click, false);
+		sce.a.c.can.dataset.x = "farn";
+		dom.add(sce.a.c);
+
+		sce.meta();
+	},
+	"click": function(e) {
+		console.log(e);
+		console.log(e.target.dataset.x);
+	},
+	"meta": function() {
+		// globals
+		sce.d = {};
+		sce.d.w = 1920;
+		sce.d.h = 1080;
+
+		sce.line();
+	},
+	"line": function() {
+		// line test
+		// pos
+		sce.b = sce.puff();
+		// sce.b[0] = sce.puff();
+		// sce.b[1] = sce.puff();
+		// speed
+		sce.c = [];
+		sce.c[0] = (((Math.random() * 4) - 2) >>> 0);
+		sce.c[1] = (((Math.random() * 4) - 2) >>> 0);
+	},
+	"word": function() {
+		// word test
+	},
+	"update": function() {
+		// line data in db
+	},
+	"puff": function() {
+		// random point set
+		let p0 = [];
+		p0[0] = (Math.random() * sce.d.w) >>> 0;
+		p0[1] = (Math.random() * sce.d.h) >>> 0;
+		return p0;
+	},
+	"frame": function() {
+		// bouncing round the room
+		let x0 = sce.b[0];
+		let x1 = x0 + sce.c[0];
+		let y0 = sce.b[1];
+		let y1 = y0 + sce.c[1];
+		sce.b[0] = x1;
+		sce.b[1] = y1;
+	},
+	"bound": function() {
+		// clip to screen space
+		if (sce.b[0] >= sce.d.w) {
+			sce.b[0] = sce.d.w - 1;
+			sce.c[0] = -sce.c[0];
+		}
+		if (sce.b[0] <= 0) {
+			sce.b[0] = 1;
+			sce.c[0] = -sce.c[0];
+		}
+		if (sce.b[1] >= sce.d.h) {
+			sce.b[1] = sce.d.h - 1;
+			sce.c[1] = -sce.c[1];
+		}
+		if (sce.b[1] <= 0) {
+			sce.b[1] = 1;
+			sce.c[1] = -sce.c[1];
+		}
+	},
+	"pure": function() {
+		db.brush();
+	},
+	"pure2": function() {
+		db.blot();
+	}
+}
+// data
+var db = {
+	"init": function() {
+		// key value master
+		db.a = {};
+		// line collection
+		db.b = [];
+	},
+	"clock": function() {
+		// series of rotating lines
+		// and coordinate transforms
+	},
+	"brush": function() {
+		// add a random line to the collection
+		// line def: p0.a0 vertex list
+		let p0 = {};
+		// p0.a0 = [];
+		// p0.a0[0] = db.rand();
+		// p0.a0[1] = db.rand();
+		p0.a0 = db.rand();
+		db.b.push(p0);
+	},
+	"blot": function() {
+		// pop the last line off
+		if (db.b.length >= 1) {
+			db.b = db.b.slice(0, db.b.length - 1);
+		}
+	},
+	"rand": function() {
+		let p0 = [];
+		p0[0] = db.rand2();
+		p0[1] = db.rand2();
+		return p0;
+	},
+	"rand2": function() {
+		let p0 = [];
+		p0[0] = (Math.random() * 1920) >>> 0;
+		p0[1] = (Math.random() * 1080) >>> 0;
+		return p0;
+	}
+}
+// math
+var math = {
+	"polar": function(x0,y0) {
+		// cartesian to polar
+	},
+	"cart": function(r0,a0) {
+		// polar to cartesian
+	}
+}
+// render
+var ren = {
+	"data": function() {
+		// over collection
+		sce.a.c.con.fillStyle = sce.a.d;
+		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+	},
+	"lines": function() {
+		// des: black back ground
+		// thick 4px width white line draw as filled rects
+		ren.clear();
+		sce.a.c.con.beginPath();
+		sce.a.c.con.strokeStyle = rgba.css([255,255,255,1.0]);
+		sce.a.c.con.moveTo(0,0);
+		sce.a.c.con.lineTo(sce.b[0],sce.b[1]);
+		console.log(sce.b);
+		sce.a.c.con.lineWidth = 4;
+		sce.a.c.con.stroke();
+	},
+	"clear": function() {
+		sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0]);
+		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+	},
+	"world": function() {
+		ren.clear();
+		console.log(db.b);
+		for (let i = 0; i < db.b.length; i++) {
+			ren.line(db.b[i].a0);
+		}
+	},
+	"line": function(p0) {
+		console.log(p0);
+		sce.a.c.con.beginPath();
+		sce.a.c.con.strokeStyle = rgba.css([255,255,255,1.0]);
+		sce.a.c.con.lineWidth = 4;
+		sce.a.c.con.moveTo(p0[0][0],p0[0][1]);
+		sce.a.c.con.lineTo(p0[1][0],p0[1][1]);
+		sce.a.c.con.stroke();
+		// sce.a.c.con.fillStyle = rgba.rand();
+		// sce.a.c.con.fillRect(Math.random()*1920,Math.random()*1080,16,16);
 	}
 }
 // dom
@@ -249,5 +452,7 @@ var binStr = function(nMask) {
     <body id="alpha">
     </body>
 </html>
- 
 
+
+
+ 
