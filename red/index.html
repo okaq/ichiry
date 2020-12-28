@@ -46,12 +46,36 @@ var a = {
 		window.clearInterval(a.id);
 		return;
 	    }
+	    ren.bkgd();
 	    a.tick = a.tick + 1;
     }
 }
 // scene
 var sce = {
 	"init": function() {
+		sce.a = {};
+		sce.a.r = [1920,1080,0,0];
+		sce.a.c = dom.canvas(sce.a.r);
+		sce.a.d = rgba.css([0,0,0,1.0]);
+		dom.add(sce.a.c);
+		sce.a.c.can.dataset.x = "bkgd";
+		sce.a.c.can.addEventListener("click", sce.click, false);
+	},
+	"click": function(e) {
+		console.log(e);
+	}
+}
+// data
+var db = {
+	"init": function() {
+		db.a = {};
+	}
+}
+// render
+var ren = {
+	"bkgd": function() {
+		sce.a.c.con.fillStyle = sce.a.d;
+		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
 	}
 }
 // dom
