@@ -72,7 +72,7 @@ var a = {
 			return;
 		}
 		console.log("tick count: " + a.tick);
-		if (a.tick <= (a.max / 2)) {
+		if (a.tick <= ((a.max / 2) - 1)) {
 			sce.pure();
 		} else {
 			sce.pure2();
@@ -181,9 +181,10 @@ var db = {
 		// add a random line to the collection
 		// line def: p0.a0 vertex list
 		let p0 = {};
-		p0.a0 = [];
-		p0.a0[0] = db.rand();
-		p0.a0[1] = db.rand();
+		// p0.a0 = [];
+		// p0.a0[0] = db.rand();
+		// p0.a0[1] = db.rand();
+		p0.a0 = db.rand();
 		db.b.push(p0);
 	},
 	"blot": function() {
@@ -202,6 +203,7 @@ var db = {
 		let p0 = [];
 		p0[0] = (Math.random() * 1920) >>> 0;
 		p0[1] = (Math.random() * 1080) >>> 0;
+		return p0;
 	}
 }
 // math
@@ -245,12 +247,14 @@ var ren = {
 	},
 	"line": function(p0) {
 		console.log(p0);
+		sce.a.c.con.beginPath();
 		sce.a.c.con.strokeStyle = rgba.css([255,255,255,1.0]);
 		sce.a.c.con.lineWidth = 4;
-		sce.a.c.con.beginPath();
 		sce.a.c.con.moveTo(p0[0][0],p0[0][1]);
 		sce.a.c.con.lineTo(p0[1][0],p0[1][1]);
 		sce.a.c.con.stroke();
+		// sce.a.c.con.fillStyle = rgba.rand();
+		// sce.a.c.con.fillRect(Math.random()*1920,Math.random()*1080,16,16);
 	}
 }
 // dom
