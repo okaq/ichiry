@@ -115,6 +115,26 @@ var db = {
 		r0[2] = ((Math.random() * 4) - 2) >>> 0;
 		r0[3] = ((Math.random() * 4) - 2) >>> 0;
 		return r0;
+	},
+	"update": function() {
+		for (let i = 0; i < db.a.length; i++) {
+			db.a[i] = db.a[i] + db.b[i];
+		}
+	},
+	"bound": function() {
+		for (let i = 0; i < db.a.length; i++) {
+			if (db.a[i] <= 0) {
+				db.a[i] = 1;
+				db.b[i] = -db.b[i];
+				return;
+			}
+			let max0 = 1080;
+			if ((i % 2) == 1) {
+				max0 = 1920;
+			}
+			db.a[i] = max0 - 1;
+			db.b[i] = -db.b[i];
+		}
 	}
 }
 // render
