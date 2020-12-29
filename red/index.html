@@ -50,7 +50,10 @@ var a = {
 	    if (a.tick == 0) {
 	    	// add a rand line to data set
 		db.pop();
+		db.vel();
 	    }
+	    db.update();
+	    db.bound();
 	    ren.bkgd();
 	    ren.data();
 	    a.tick = a.tick + 1;
@@ -86,6 +89,8 @@ var db = {
 		db.a = [];
 		// line format [p0.x,p0.y,p1.x,p1.y]
 		// db.pop();
+		// integrated physics
+		db.b = [];
 	},
 	"pop": function() {
 		// initial random vertices
@@ -97,6 +102,18 @@ var db = {
 		r0[1] = (Math.random() * sce.b.h) >>> 0;
 		r0[2] = (Math.random() * sce.b.w) >>> 0;
 		r0[3] = (Math.random() * sce.b.h) >>> 0;
+		return r0;
+	},
+	"vel": function() {
+		// velocity format [p0.vx,p0.vy,p1.vx,p0.vy]
+		db.b[0] = db.rand2();
+	},
+	"rand2": function() {
+		var r0 = [];
+		r0[0] = ((Math.random() * 4) - 2) >>> 0;
+		r0[1] = ((Math.random() * 4) - 2) >>> 0;
+		r0[2] = ((Math.random() * 4) - 2) >>> 0;
+		r0[3] = ((Math.random() * 4) - 2) >>> 0;
 		return r0;
 	}
 }
