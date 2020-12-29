@@ -41,6 +41,7 @@ var a = {
  
     },
     "cyc": function() {
+	    console.log("tick count: " + a.tick);
 	    if (a.tick >= a.max) {
 	    	console.log("anim done");
 		window.clearInterval(a.id);
@@ -53,7 +54,7 @@ var a = {
 		db.vel();
 	    }
 	    db.update();
-	    db.bound();
+	    // db.bound();
 	    ren.bkgd();
 	    ren.data();
 	    a.tick = a.tick + 1;
@@ -109,20 +110,41 @@ var db = {
 		db.b[0] = db.rand2();
 	},
 	"rand2": function() {
+		// jump distance
+		let t0 = 16;
+		let t1 = t0 / 2;
 		var r0 = [];
-		r0[0] = ((Math.random() * 4) - 2) >>> 0;
-		r0[1] = ((Math.random() * 4) - 2) >>> 0;
-		r0[2] = ((Math.random() * 4) - 2) >>> 0;
-		r0[3] = ((Math.random() * 4) - 2) >>> 0;
+		r0[0] = ((Math.random() * t0) - t1);
+		r0[1] = ((Math.random() * t0) - t1);
+		r0[2] = ((Math.random() * t0) - t1);
+		r0[3] = ((Math.random() * t0) - t1);
 		return r0;
 	},
 	"update": function() {
 		for (let i = 0; i < db.a.length; i++) {
-			db.a[i] = db.a[i] + db.b[i];
+			// db.a[i] = db.a[i] + db.b[i];
+			for (j = 0; j < db.a[i].length; j++) {
+				db.a[i][j] = db.a[i][j] + db.b[i][j];
+			}
 		}
 	},
 	"bound": function() {
 		for (let i = 0; i < db.a.length; i++) {
+			// inner loop
+			for (let j = 0; j < db.a[i].length; j++) {
+				if (db.a[i][j] <= 0) {
+					db.a[i][j] = 1;
+					db.b[i][j] = -db.b[i][j];
+					return;
+				}
+				let max0 = 1080;
+				if ((j % 2) == 0) {
+					max0 = 1920;
+				}
+				db.a[i][j] = max0 - 1;
+				db.b[i][j] = -db.b[i][j];
+			}
+			/*
 			if (db.a[i] <= 0) {
 				db.a[i] = 1;
 				db.b[i] = -db.b[i];
@@ -134,6 +156,7 @@ var db = {
 			}
 			db.a[i] = max0 - 1;
 			db.b[i] = -db.b[i];
+			*/
 		}
 	}
 }
