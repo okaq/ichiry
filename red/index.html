@@ -113,7 +113,15 @@ var ren = {
 	},
 	"line": function(p0) {
 		console.log(p0);
-
+		sce.a.c.con.beginPath()
+		sce.a.c.con.strokeStyle = rgba.css([255,255,255,1.0]);
+		sce.a.c.con.lineWidth = 4;
+		sce.a.c.con.moveTo(p0[0],p0[1]);
+		sce.a.c.con.lineTo(p0[2],p0[3]);
+		sce.a.c.con.stroke();
+	},
+	"line2": function(i0, p0) {
+		// shading based on index count
 	}
 }
 // dom
