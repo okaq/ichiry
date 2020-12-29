@@ -46,7 +46,13 @@ var a = {
 		window.clearInterval(a.id);
 		return;
 	    }
+	    // frame based fsm
+	    if (a.tick == 0) {
+	    	// add a rand line to data set
+		db.pop();
+	    }
 	    ren.bkgd();
+	    ren.data();
 	    a.tick = a.tick + 1;
     }
 }
@@ -60,15 +66,38 @@ var sce = {
 		dom.add(sce.a.c);
 		sce.a.c.can.dataset.x = "bkgd";
 		sce.a.c.can.addEventListener("click", sce.click, false);
+
+		sce.meta();
 	},
 	"click": function(e) {
 		console.log(e);
+	},
+	"meta": function() {
+		// globals
+		sce.b = {};
+		sce.b.w = 1920;
+		sce.b.h = 1080;
 	}
 }
 // data
 var db = {
 	"init": function() {
-		db.a = {};
+		// line history
+		db.a = [];
+		// line format [p0.x,p0.y,p1.x,p1.y]
+		// db.pop();
+	},
+	"pop": function() {
+		// initial random vertices
+		db.a[0] = db.rand();
+	},
+	"rand": function() {
+		var r0 = [];
+		r0[0] = (Math.random() * sce.b.w) >>> 0;
+		r0[1] = (Math.random() * sce.b.h) >>> 0;
+		r0[2] = (Math.random() * sce.b.w) >>> 0;
+		r0[3] = (Math.random() * sce.b.h) >>> 0;
+		return r0;
 	}
 }
 // render
@@ -76,6 +105,15 @@ var ren = {
 	"bkgd": function() {
 		sce.a.c.con.fillStyle = sce.a.d;
 		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+	},
+	"data": function() {
+		for (let i = 0; i < db.a.length; i++) {
+			ren.line(db.a[i]);
+		}
+	},
+	"line": function(p0) {
+		console.log(p0);
+
 	}
 }
 // dom
