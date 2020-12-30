@@ -32,7 +32,7 @@ var a = {
         // cycle
 	    a.tick = 0;
 	    a.max = 1028;
-	    a.id = window.setInterval(a.cyc, 60);
+	    a.id = window.setInterval(a.cyc, 100);
 
         // stats
         var done = window.performance.now();
@@ -57,6 +57,10 @@ var a = {
 	    db.bound();
 	    ren.bkgd();
 	    ren.data();
+	    if (a.tick >= 1 && (a.tick % 10) == 0) {
+	    	db.pop2();
+		db.vel2();
+	    }
 	    a.tick = a.tick + 1;
     }
 }
@@ -166,6 +170,19 @@ var db = {
 			db.b[i] = -db.b[i];
 			*/
 		}
+	},
+	"pop2": function() {
+		// db.a.push(db.rand());
+		// es6 deep copy
+		const a0 = db.a[db.a.length-1];
+		const a1 = [...a0];
+		db.a.push(a1);
+	},
+	"vel2": function() {
+		// db.b.push(db.rand2());
+		const a0 = db.b[db.b.length-1];
+		const a1 = [...a0];
+		db.b.push(a1);
 	}
 }
 // render
@@ -180,7 +197,7 @@ var ren = {
 		}
 	},
 	"line": function(p0) {
-		console.log(p0);
+		// console.log(p0);
 		sce.a.c.con.beginPath()
 		sce.a.c.con.strokeStyle = rgba.css([255,255,255,1.0]);
 		sce.a.c.con.lineWidth = 4;
