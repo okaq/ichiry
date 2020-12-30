@@ -41,7 +41,7 @@ var a = {
  
     },
     "cyc": function() {
-	    console.log("tick count: " + a.tick);
+	    // console.log("tick count: " + a.tick);
 	    if (a.tick >= a.max) {
 	    	console.log("anim done");
 		window.clearInterval(a.id);
@@ -60,6 +60,7 @@ var a = {
 	    if (a.tick >= 1 && (a.tick % 10) == 0) {
 	    	db.pop2();
 		db.vel2();
+		db.vel3();
 	    }
 	    a.tick = a.tick + 1;
     }
@@ -183,6 +184,14 @@ var db = {
 		const a0 = db.b[db.b.length-1];
 		const a1 = [...a0];
 		db.b.push(a1);
+	},
+	"vel3": function() {
+		// db.b.push([0,0,0,0]);
+		// slow it down
+		for (let i = 0; i < db.b[db.b.length-1].length; i++) {
+			db.b[db.b.length-1][i] = db.b[db.b.length-1][i] * 0.95;
+		}
+		// db.c = [] state of animation
 	}
 }
 // render
@@ -193,7 +202,8 @@ var ren = {
 	},
 	"data": function() {
 		for (let i = 0; i < db.a.length; i++) {
-			ren.line(db.a[i]);
+			// ren.line(db.a[i]);
+			ren.line2(i,db.a[i]);
 		}
 	},
 	"line": function(p0) {
@@ -207,6 +217,15 @@ var ren = {
 	},
 	"line2": function(i0, p0) {
 		// shading based on index count
+		// let alpha0 = 1.0 - a.tick / a.max;
+		let alpha0 = 1.0 - i0 / db.a.length;
+		// console.log(alpha0);
+		sce.a.c.con.beginPath()
+		sce.a.c.con.strokeStyle = rgba.css([255,255,255,alpha0]);
+		sce.a.c.con.lineWidth = 4;
+		sce.a.c.con.moveTo(p0[0],p0[1]);
+		sce.a.c.con.lineTo(p0[2],p0[3]);
+		sce.a.c.con.stroke();
 	}
 }
 // dom
