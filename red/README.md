@@ -22,4 +22,6 @@ files: app.yaml, web.go, index.html
 resurrect via gae debug console
 
 
+clocks utc, nyc, la, tokyo, mumbai
+
 

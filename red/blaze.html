@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=1920,height=1080,initial-scale=1" />
         <meta name="source" content="https://github.com/okaq/ichiry" />
         <meta name="creator" content="AQ<aq@okaq.com>" />
-        <meta name="date" content="2020-12-30" />
+        <meta name="date" content="2020-12-28" />
         <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAMklEQVR4nGKRNH/IQEvARFPTRy0YtWDUglELRi0YtWDUglELRi0YtWDUAioCQAAAAP//JGYBdI4ZOy8AAAAASUVORK5CYII=" />
         <style type="text/css">
             html,body{width:1920px;height:1080px;margin:0px;padding:0px;border:0px;background-color:rgba(255,255,255,1.0);}
@@ -46,9 +46,22 @@ var a = {
 	    	console.log("anim done");
 		window.clearInterval(a.id);
 		return;
-	    
 	    }
-	    // update
+	    // frame based fsm
+	    if (a.tick == 0) {
+	    	// add a rand line to data set
+		db.pop();
+		db.vel();
+	    }
+	    db.update();
+	    db.bound();
+	    ren.bkgd();
+	    ren.data();
+	    if (a.tick >= 1 && (a.tick % 10) == 0) {
+	    	db.pop2();
+		db.vel2();
+		db.vel3();
+	    }
 	    a.tick = a.tick + 1;
     }
 }
@@ -67,19 +80,152 @@ var sce = {
 	},
 	"click": function(e) {
 		console.log(e);
+	},
+	"meta": function() {
+		// globals
+		sce.b = {};
+		sce.b.w = 1920;
+		sce.b.h = 1080;
 	}
 }
 // data
 var db = {
 	"init": function() {
-		db.a = {};
+		// line history
+		db.a = [];
+		// line format [p0.x,p0.y,p1.x,p1.y]
+		// db.pop();
+		// integrated physics
+		db.b = [];
+	},
+	"pop": function() {
+		// initial random vertices
+		db.a[0] = db.rand();
+	},
+	"rand": function() {
+		var r0 = [];
+		r0[0] = (Math.random() * sce.b.w) >>> 0;
+		r0[1] = (Math.random() * sce.b.h) >>> 0;
+		r0[2] = (Math.random() * sce.b.w) >>> 0;
+		r0[3] = (Math.random() * sce.b.h) >>> 0;
+		return r0;
+	},
+	"vel": function() {
+		// velocity format [p0.vx,p0.vy,p1.vx,p0.vy]
+		db.b[0] = db.rand2();
+	},
+	"rand2": function() {
+		// jump distance
+		let t0 = 16;
+		let t1 = t0 / 2;
+		var r0 = [];
+		r0[0] = ((Math.random() * t0) - t1);
+		r0[1] = ((Math.random() * t0) - t1);
+		r0[2] = ((Math.random() * t0) - t1);
+		r0[3] = ((Math.random() * t0) - t1);
+		return r0;
+	},
+	"update": function() {
+		for (let i = 0; i < db.a.length; i++) {
+			// db.a[i] = db.a[i] + db.b[i];
+			for (j = 0; j < db.a[i].length; j++) {
+				db.a[i][j] = db.a[i][j] + db.b[i][j];
+			}
+		}
+	},
+	"bound": function() {
+		for (let i = 0; i < db.a.length; i++) {
+			// inner loop
+			for (let j = 0; j < db.a[i].length; j++) {
+				if (db.a[i][j] <= 0) {
+					db.a[i][j] = 1;
+					db.b[i][j] = -db.b[i][j];
+					return;
+				}
+				let max0 = 1920;
+				if ((j % 2) == 1) {
+					max0 = 1080;
+					if (db.a[i][j] >= max0) {
+						db.a[i][j] = max0 - 1;
+						db.b[i][j] = -db.b[i][j];
+						return;
+					}
+				}
+				if (db.a[i][j] >= max0) {
+					db.a[i][j] = max0 - 1;
+					db.b[i][j] = -db.b[i][j];
+				}
+				// bitmap flag
+			}
+			/*
+			if (db.a[i] <= 0) {
+				db.a[i] = 1;
+				db.b[i] = -db.b[i];
+				return;
+			}
+			let max0 = 1080;
+			if ((i % 2) == 1) {
+				max0 = 1920;
+			}
+			db.a[i] = max0 - 1;
+			db.b[i] = -db.b[i];
+			*/
+		}
+	},
+	"pop2": function() {
+		// db.a.push(db.rand());
+		// es6 deep copy
+		const a0 = db.a[db.a.length-1];
+		const a1 = [...a0];
+		db.a.push(a1);
+	},
+	"vel2": function() {
+		// db.b.push(db.rand2());
+		const a0 = db.b[db.b.length-1];
+		const a1 = [...a0];
+		db.b.push(a1);
+	},
+	"vel3": function() {
+		// db.b.push([0,0,0,0]);
+		// slow it down
+		for (let i = 0; i < db.b[db.b.length-1].length; i++) {
+			db.b[db.b.length-1][i] = db.b[db.b.length-1][i] * 0.95;
+		}
+		// db.c = [] state of animation
 	}
 }
 // render
 var ren = {
 	"bkgd": function() {
-		sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0]);
+		sce.a.c.con.fillStyle = sce.a.d;
 		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+	},
+	"data": function() {
+		for (let i = 0; i < db.a.length; i++) {
+			// ren.line(db.a[i]);
+			ren.line2(i,db.a[i]);
+		}
+	},
+	"line": function(p0) {
+		// console.log(p0);
+		sce.a.c.con.beginPath()
+		sce.a.c.con.strokeStyle = rgba.css([255,255,255,1.0]);
+		sce.a.c.con.lineWidth = 4;
+		sce.a.c.con.moveTo(p0[0],p0[1]);
+		sce.a.c.con.lineTo(p0[2],p0[3]);
+		sce.a.c.con.stroke();
+	},
+	"line2": function(i0, p0) {
+		// shading based on index count
+		// let alpha0 = 1.0 - a.tick / a.max;
+		let alpha0 = 1.0 - i0 / db.a.length;
+		// console.log(alpha0);
+		sce.a.c.con.beginPath()
+		sce.a.c.con.strokeStyle = rgba.css([255,255,255,alpha0]);
+		sce.a.c.con.lineWidth = 4;
+		sce.a.c.con.moveTo(p0[0],p0[1]);
+		sce.a.c.con.lineTo(p0[2],p0[3]);
+		sce.a.c.con.stroke();
 	}
 }
 // dom
