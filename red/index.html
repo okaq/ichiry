@@ -67,12 +67,53 @@ var sce = {
 	},
 	"click": function(e) {
 		console.log(e);
+	},
+	"meta": function() {
+		// globals
+		sce.b = {};
+		sce.b.w = 1920;
+		sce.b.h = 1080;
 	}
 }
 // data
 var db = {
 	"init": function() {
 		db.a = {};
+
+		db.word();
+	},
+	"word": function() {
+		// eleven letters
+		db.b = [
+			"abandonment",
+			"beautifully",
+			"chantarelle",
+			"deliriously",
+			"eclecticism",
+			"fantabulous",
+			"gravitation",
+			"halfhearted",
+			"idolization",
+			"joyfullness",
+			"kabbalistic",
+			"lacrimatory",
+			"macrobiotic",
+			"nightingale",
+			"occultation",
+			"pandemonium",
+			"quaternions",
+			"rationalist",
+			"scandalized",
+			"tempestuous",
+			"unbreakable",
+			"vacationing",
+			"whimsically",
+			"xenogenesis",
+			"yugoslavian",
+			"zealousness"
+		];
+		db.c = db.b.map(el => el.toUpperCase().split(""));
+		// console.log(db.b,db.c);
 	}
 }
 // render
