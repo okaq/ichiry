@@ -56,7 +56,9 @@ var a = {
     },
 	"cyc2": function() {
 		a.tick = 0;
-		a.max = bmp.a.length;
+		// a.max = bmp.a.length;
+		db.fund();
+		a.max = db.d.length;
 		sce.pane();
 		a.id = window.setInterval(a.cyc3, 1000);
 	},
@@ -102,7 +104,7 @@ var sce = {
 		sce.c = {};
 		sce.c.r = [1024,1024,448,26];
 		sce.c.c = dom.canvas(sce.a.r);
-		sce.c.d = [rgba.css(255,255,255,1.0),rgba.css([0,0,0,1.0])];
+		sce.c.d = [rgba.css([255,255,255,1.0]),rgba.css([0,0,0,1.0])];
 		dom.add(sce.c.c);
 		sce.c.c.can.dataset.x = "pane";
 		sce.c.c.can.addEventListener("click", sce.click, false);
@@ -145,8 +147,26 @@ var db = {
 			"yugoslavian",
 			"zealousness"
 		];
-		db.c = db.b.map(el => el.toUpperCase().split(""));
+		// db.c = db.b.map(el => el.toUpperCase().split(""));
+		db.c = db.b.map(el => el.split(""));
 		// console.log(db.b,db.c);
+	},
+	"fund": function() {
+		db.d = [];
+		// bmp.a.forEach(el => db.d.push(el));
+		for (var k0 in bmp.a) {
+			db.d.push(k0);
+		}
+		console.log(db.d);
+		// fisher yates shuffle
+		db.e = [...db.d];
+		for (let i = db.e.length-1; i > 0; i--) {
+			let i0 = (Math.random() * i) >>> 0;
+			let a0 = db.e[i0];
+			db.e[i0] = db.e[i];
+			db.e[i] = a0;
+		}
+		console.log(db.e);
 	}
 }
 // render
