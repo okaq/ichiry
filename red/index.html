@@ -31,8 +31,8 @@ var a = {
 
         // cycle
 	    a.tick = 0;
-	    a.max = 1028;
-	    a.id = window.setInterval(a.cyc, 100);
+	    a.max = 1;
+	    a.id = window.setInterval(a.cyc, 1000);
 
         // stats
         var done = window.performance.now();
@@ -43,14 +43,32 @@ var a = {
     "cyc": function() {
 	    // console.log("tick count: " + a.tick);
 	    if (a.tick >= a.max) {
-	    	console.log("anim done");
+	    	console.log("char test");
 		window.clearInterval(a.id);
+		window.setTimeout(a.cyc2, 1000);
 		return;
 	    
 	    }
 	    // update
 	    a.tick = a.tick + 1;
-    }
+	    // custom tick function generator
+	    // sequencing logic by state change
+    },
+	"cyc2": function() {
+		a.tick = 0;
+		a.max = bmp.a.length;
+		sce.pane();
+		a.id = window.setInterval(a.cyc3, 1000);
+	},
+	"cyc3": function() {
+		if (a.tick >= a.max) {
+			console.log("anim done");
+			window.clearInterval(a.id);
+			return;
+		}
+		// next char frame
+		a.tick = a.tick + 1;
+	}
 }
 // scene
 var sce = {
@@ -73,6 +91,21 @@ var sce = {
 		sce.b = {};
 		sce.b.w = 1920;
 		sce.b.h = 1080;
+	},
+	"word": function(t0) {
+		// input text string
+		// add canvas blocks
+		// record in scene manager
+	},
+	"pane": function() {
+		// char test pane
+		sce.c = {};
+		sce.c.r = [1024,1024,448,26];
+		sce.c.c = dom.canvas(sce.a.r);
+		sce.c.d = [rgba.css(255,255,255,1.0),rgba.css([0,0,0,1.0])];
+		dom.add(sce.c.c);
+		sce.c.c.can.dataset.x = "pane";
+		sce.c.c.can.addEventListener("click", sce.click, false);
 	}
 }
 // data
