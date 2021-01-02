@@ -69,6 +69,7 @@ var a = {
 			return;
 		}
 		// next char frame
+
 		a.tick = a.tick + 1;
 	}
 }
@@ -167,6 +168,16 @@ var db = {
 			db.e[i] = a0;
 		}
 		console.log(db.e);
+	},
+	"update": function() {
+		db.f = {};
+		// tick index count
+		db.f.a = a.tick;
+		// char string
+		db.f.b = db.e[db.f];
+		// bmp data
+		db.f.c = bmp.a[db.f.b];
+		console.log(db.f);
 	}
 }
 // render
