@@ -69,7 +69,9 @@ var a = {
 			return;
 		}
 		// next char frame
-
+		db.update();
+		// scene change
+		ren.data();
 		a.tick = a.tick + 1;
 	}
 }
@@ -185,6 +187,17 @@ var ren = {
 	"bkgd": function() {
 		sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0]);
 		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+	},
+	"data": function() {
+		ren.pane();
+		ren.bmp(db.f.c, sce.c.c);
+	},
+	"pane": function() {
+		sce.c.c.con.fillStyle = rgba.css(sce.c.d[0]);
+		sce.c.c.con.fillRect(0,0,sce.c.c.can.width,sce.c.c.can.height);
+	},
+	"bmp": function(d0,c0) {
+		// fixed 1024x1024 canvas, 32x32 bit array
 	}
 }
 // dom
