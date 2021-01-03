@@ -198,6 +198,17 @@ var ren = {
 	},
 	"bmp": function(d0,c0) {
 		// fixed 1024x1024 canvas, 32x32 bit array
+		sce.c.c.con.fillStyle = rgba.css(sce.c.d[1]);
+		for (let i = 0; i < d0.length; i++) {
+			if (d0[i] == 0) {
+				continue;
+			}
+			let x0 = i % 32;
+			let x1 = (x0 * 32) >>> 0;
+			let y0 = (i / 32) >>> 0;
+			let y1 = (y0 * 32) >>> 0;
+			sce.c.con.fillRect(x1,y1,32,32);
+		}
 	}
 }
 // dom
