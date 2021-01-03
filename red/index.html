@@ -78,7 +78,8 @@ var a = {
 	"cyc4": function() {
 		console.log("word test"); 
 		a.tick = 0;
-		a.max = db.b.length;
+		db.pond();
+		a.max = db.g.length;
 		sce.group();
 		a.id = window.setInterval(a.cyc5, 1000);
 	},
@@ -127,6 +128,12 @@ var sce = {
 		dom.add(sce.c.c);
 		sce.c.c.can.dataset.x = "pane";
 		sce.c.c.can.addEventListener("click", sce.click, false);
+	},
+	"group": function() {
+		// del test pane
+		dom.remove(sce.c.c);
+		// each update create an eleven canvas block
+		// layout random on the field with margin
 	}
 }
 // data
@@ -196,6 +203,16 @@ var db = {
 		// bmp data
 		db.f.c = bmp.a[db.f.b];
 		console.log(db.f);
+	},
+	"pond": function() {
+		db.g = [...db.b];
+		for (let i = db.g.length-1; i > 0; i--) {
+			let i0 = (Math.random() * i) >>> 0;
+			let a0 = db.g[i0];
+			db.g[i0] = db.g[i];
+			db.g[i] = a0;
+		}
+		console.log(db.g);
 	}
 }
 // render
