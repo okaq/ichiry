@@ -66,12 +66,28 @@ var a = {
 		if (a.tick >= a.max) {
 			console.log("anim done");
 			window.clearInterval(a.id);
+			window.setTimeout(a.cyc4, 1000);
 			return;
 		}
 		// next char frame
 		db.update();
 		// scene change
 		ren.data();
+		a.tick = a.tick + 1;
+	},
+	"cyc4": function() {
+		console.log("word test"); 
+		a.tick = 0;
+		a.max = db.b.length;
+		sce.group();
+		a.id = window.setInterval(a.cyc5, 1000);
+	},
+	"cyc5": function() {
+		if (a.tick >= a.max) {
+			console.log("anim done");
+			window.clearInterval(a.id);
+			return;
+		}
 		a.tick = a.tick + 1;
 	}
 }
@@ -106,7 +122,7 @@ var sce = {
 		// char test pane
 		sce.c = {};
 		sce.c.r = [1024,1024,448,26];
-		sce.c.c = dom.canvas(sce.a.r);
+		sce.c.c = dom.canvas(sce.c.r);
 		sce.c.d = [rgba.css([255,255,255,1.0]),rgba.css([0,0,0,1.0])];
 		dom.add(sce.c.c);
 		sce.c.c.can.dataset.x = "pane";
@@ -176,7 +192,7 @@ var db = {
 		// tick index count
 		db.f.a = a.tick;
 		// char string
-		db.f.b = db.e[db.f];
+		db.f.b = db.e[db.f.a];
 		// bmp data
 		db.f.c = bmp.a[db.f.b];
 		console.log(db.f);
@@ -185,7 +201,8 @@ var db = {
 // render
 var ren = {
 	"bkgd": function() {
-		sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0]);
+		// sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0]);
+		sce.a.c.con.fillStyle = sce.a.d;
 		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
 	},
 	"data": function() {
@@ -193,12 +210,12 @@ var ren = {
 		ren.bmp(db.f.c, sce.c.c);
 	},
 	"pane": function() {
-		sce.c.c.con.fillStyle = rgba.css(sce.c.d[0]);
+		sce.c.c.con.fillStyle = sce.c.d[1];
 		sce.c.c.con.fillRect(0,0,sce.c.c.can.width,sce.c.c.can.height);
 	},
 	"bmp": function(d0,c0) {
 		// fixed 1024x1024 canvas, 32x32 bit array
-		sce.c.c.con.fillStyle = rgba.css(sce.c.d[1]);
+		sce.c.c.con.fillStyle = sce.c.d[0];
 		for (let i = 0; i < d0.length; i++) {
 			if (d0[i] == 0) {
 				continue;
@@ -207,7 +224,7 @@ var ren = {
 			let x1 = (x0 * 32) >>> 0;
 			let y0 = (i / 32) >>> 0;
 			let y1 = (y0 * 32) >>> 0;
-			sce.c.con.fillRect(x1,y1,32,32);
+			sce.c.c.con.fillRect(x1,y1,32,32);
 		}
 	}
 }
