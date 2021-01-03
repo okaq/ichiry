@@ -134,6 +134,7 @@ var sce = {
 		dom.remove(sce.c.c);
 		// each update create an eleven canvas block
 		// layout random on the field with margin
+		sce.d = {};
 	}
 }
 // data
@@ -213,6 +214,13 @@ var db = {
 			db.g[i] = a0;
 		}
 		console.log(db.g);
+		// rects list and metadata
+		db.h = {};
+		db.h.a = [];
+		db.h.m = 1;
+		db.h.l = 11;
+		db.h.w = ((32 + (db.h.m * 2)) * db.h.l) >>> 0;
+		db.h.h = (32 + (db.h.m * 2)) >>> 0;
 	}
 }
 // render
