@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=1920,height=1080,initial-scale=1" />
         <meta name="source" content="https://github.com/okaq/ichiry" />
         <meta name="creator" content="AQ<aq@okaq.com>" />
-        <meta name="date" content="2021-01-06" />
+        <meta name="date" content="2020-12-30" />
         <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAMklEQVR4nGKRNH/IQEvARFPTRy0YtWDUglELRi0YtWDUglELRi0YtWDUAioCQAAAAP//JGYBdI4ZOy8AAAAASUVORK5CYII=" />
         <style type="text/css">
             html,body{width:1920px;height:1080px;margin:0px;padding:0px;border:0px;background-color:rgba(255,255,255,1.0);}
@@ -32,7 +32,7 @@ var a = {
         // cycle
 	    a.tick = 0;
 	    a.max = 1;
-	    a.id = window.setTimeout(a.cyc, 1000);
+	    a.id = window.setInterval(a.cyc, 1000);
 
         // stats
         var done = window.performance.now();
@@ -41,30 +41,278 @@ var a = {
  
     },
     "cyc": function() {
-	    console.log("clocks");
-    }
+	    // console.log("tick count: " + a.tick);
+	    if (a.tick >= a.max) {
+	    	console.log("char test");
+		window.clearInterval(a.id);
+		window.setTimeout(a.cyc2, 1000);
+		return;
+	    
+	    }
+	    // update
+	    a.tick = a.tick + 1;
+	    // custom tick function generator
+	    // sequencing logic by state change
+    },
+	"cyc2": function() {
+		a.tick = 0;
+		// a.max = bmp.a.length;
+		db.fund();
+		a.max = db.d.length;
+		sce.pane();
+		a.id = window.setInterval(a.cyc3, 1000);
+	},
+	"cyc3": function() {
+		if (a.tick >= a.max) {
+			console.log("anim done");
+			window.clearInterval(a.id);
+			window.setTimeout(a.cyc4, 1000);
+			return;
+		}
+		// next char frame
+		db.update();
+		// scene change
+		ren.data();
+		a.tick = a.tick + 1;
+	},
+	"cyc4": function() {
+		console.log("word test"); 
+		a.tick = 0;
+		db.pond();
+		a.max = db.g.length;
+		sce.group();
+		a.id = window.setInterval(a.cyc5, 1000);
+	},
+	"cyc5": function() {
+		// console.log("tick count " + a.tick);
+		if (a.tick >= a.max) {
+			console.log("anim done");
+			window.clearInterval(a.id);
+			return;
+		}
+		db.flow();
+		sce.noon();
+		ren.elven();
+		a.tick = a.tick + 1;
+	}
 }
 // scene
 var sce = {
 	"init": function() {
 		sce.a = {};
+		sce.a.r = [1920,1080,0,0];
+		sce.a.c = dom.canvas(sce.a.r);
+		sce.a.d = rgba.css([0,0,0,1.0]);
+		dom.add(sce.a.c);
+		sce.a.c.can.dataset.x = "bkgd";
+		sce.a.c.can.addEventListener("click", sce.click, false);
+
+		sce.meta();
+	},
+	"click": function(e) {
+		console.log(e);
+	},
+	"meta": function() {
+		// globals
+		sce.b = {};
+		sce.b.w = 1920;
+		sce.b.h = 1080;
+	},
+	"word": function(t0) {
+		// input text string
+		// add canvas blocks
+		// record in scene manager
+	},
+	"pane": function() {
+		// char test pane
+		sce.c = {};
+		sce.c.r = [1024,1024,448,26];
+		sce.c.c = dom.canvas(sce.c.r);
+		sce.c.d = [rgba.css([255,255,255,1.0]),rgba.css([0,0,0,1.0])];
+		dom.add(sce.c.c);
+		sce.c.c.can.dataset.x = "pane";
+		sce.c.c.can.addEventListener("click", sce.click, false);
+	},
+	"group": function() {
+		// del test pane
+		dom.remove(sce.c.c);
+		// each update create an eleven canvas block
+		// layout random on the field with margin
+		sce.d = {};
+	},
+	"noon": function() {
+		// eleven canvas block
+		sce.d.r = [];
+		sce.d.c = [];
+		sce.d.d = [];
+		sce.d.t = [];
+		let w0 = (32 + (db.h.m * 2)) >>> 0;
+		let h0 = (32 * (db.h.m * 2)) >>> 0;
+		let r0 = db.h.a[a.tick];
+		for (let i = 0; i < db.h.l; i++) {
+			let x0 = (w0 * i) >>> 0;
+			let x1 = (x0 + r0[2]) >>> 0;
+			let x2 = (x1 + db.h.m) >>> 0;
+			let y0 = (r0[3] + db.h.m) >>> 0;
+			sce.d.r[i] = [32,32,x2,y0];
+			sce.d.c[i] = dom.canvas(sce.d.r[i]);
+			sce.d.d[i] = [rgba.css([255,255,255,1.0]),rgba.css([0,0,0,1.0])];
+			dom.add(sce.d.c[i]);
+			sce.d.c[i].can.dataset.x = "text_" + i;
+			sce.d.c[i].can.addEventListener("click", sce.click, false);
+			sce.d.t[i] = db.h.b[i];
+		}
+		// for bkgd add recy canvas
 	}
 }
 // data
 var db = {
 	"init": function() {
 		db.a = {};
-		db.a.e = Date.now();
-		db.a.a = new Date(db.a.e);
-		db.a.b = db.a.a.toISOString();
-		db.a.c = db.a.a.valueOf();
-		db.a.d = db.a.a.toLocaleString('en-US',{timeZone:'America/New_York'});
-		db.a.f = db.a.a.toLocaleString('en-US',{timeZone:'Europe/London'});
-		db.a.g = db.a.a.toLocaleString('en-US',{timeZone:'Asia/Kolkata'});
-		db.a.h = db.a.a.toLocaleString('en-US',{timeZone:'Asia/Tokyo'});
-		db.a.i = db.a.a.toLocaleString('en-US',{timeZone:'America/Los_Angeles'});
 
-		console.log(db.a);
+		db.word();
+	},
+	"word": function() {
+		// eleven letters
+		db.b = [
+			"abandonment",
+			"beautifully",
+			"chantarelle",
+			"deliriously",
+			"eclecticism",
+			"fantabulous",
+			"gravitation",
+			"halfhearted",
+			"idolization",
+			"joyfullness",
+			"kabbalistic",
+			"lacrimatory",
+			"macrobiotic",
+			"nightingale",
+			"occultation",
+			"pandemonium",
+			"quaternions",
+			"rationalist",
+			"scandalized",
+			"tempestuous",
+			"unbreakable",
+			"vacationing",
+			"whimsically",
+			"xenogenesis",
+			"yugoslavian",
+			"zealousness"
+		];
+		// db.c = db.b.map(el => el.toUpperCase().split(""));
+		db.c = db.b.map(el => el.split(""));
+		// console.log(db.b,db.c);
+	},
+	"fund": function() {
+		db.d = [];
+		// bmp.a.forEach(el => db.d.push(el));
+		for (var k0 in bmp.a) {
+			db.d.push(k0);
+		}
+		console.log(db.d);
+		// fisher yates shuffle
+		db.e = [...db.d];
+		for (let i = db.e.length-1; i > 0; i--) {
+			let i0 = (Math.random() * i) >>> 0;
+			let a0 = db.e[i0];
+			db.e[i0] = db.e[i];
+			db.e[i] = a0;
+		}
+		console.log(db.e);
+	},
+	"update": function() {
+		db.f = {};
+		// tick index count
+		db.f.a = a.tick;
+		// char string
+		db.f.b = db.e[db.f.a];
+		// bmp data
+		db.f.c = bmp.a[db.f.b];
+		console.log(db.f);
+	},
+	"pond": function() {
+		db.g = [...db.b];
+		for (let i = db.g.length-1; i > 0; i--) {
+			let i0 = (Math.random() * i) >>> 0;
+			let a0 = db.g[i0];
+			db.g[i0] = db.g[i];
+			db.g[i] = a0;
+		}
+		console.log(db.g);
+		// rects list and metadata
+		db.h = {};
+		db.h.a = [];
+		db.h.m = 1;
+		db.h.l = 11;
+		db.h.w = ((32 + (db.h.m * 2)) * db.h.l) >>> 0;
+		db.h.h = (32 + (db.h.m * 2)) >>> 0;
+	},
+	"flow": function() {
+		db.h.a[a.tick] = db.rect();
+		db.h.b = db.g[a.tick].split("");
+	},
+	"rect": function() {
+		let mx = sce.b.w - db.h.w;
+		let x0 = ((Math.random() * mx) + db.h.w) >>> 0;
+		let my = sce.b.h - db.h.h;
+		let y0 = ((Math.random() * my) + db.h.h) >>> 0;
+		return [db.h.w,db.h.h,x0,y0];
+	}
+}
+// render
+var ren = {
+	"bkgd": function() {
+		// sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0]);
+		sce.a.c.con.fillStyle = sce.a.d;
+		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+	},
+	"data": function() {
+		ren.pane();
+		ren.bmp(db.f.c, sce.c.c);
+	},
+	"pane": function() {
+		sce.c.c.con.fillStyle = sce.c.d[1];
+		sce.c.c.con.fillRect(0,0,sce.c.c.can.width,sce.c.c.can.height);
+	},
+	"bmp": function(d0,c0) {
+		// fixed 1024x1024 canvas, 32x32 bit array
+		sce.c.c.con.fillStyle = sce.c.d[0];
+		for (let i = 0; i < d0.length; i++) {
+			if (d0[i] == 0) {
+				continue;
+			}
+			let x0 = i % 32;
+			let x1 = (x0 * 32) >>> 0;
+			let y0 = (i / 32) >>> 0;
+			let y1 = (y0 * 32) >>> 0;
+			sce.c.c.con.fillRect(x1,y1,32,32);
+		}
+	},
+	"elven": function() {
+		for (let i = 0; i < sce.d.c.length; i++) {
+			ren.clear(sce.d.c[i], sce.d.d[i][1]);
+			ren.bmp2(sce.d.t[i], sce.d.c[i], sce.d.d[i][0]);
+		}
+	},
+	"clear": function(c0,d0) {
+		c0.con.fillStyle = d0;
+		c0.con.fillRect(0,0,c0.can.width,c0.can.height);
+	},
+	"bmp2": function(d0,c0,d1) {
+		// fixed 32x32 canvas, 32x32 bit array
+		c0.con.fillStyle = d1;
+		let b0 = bmp.a[d0];
+		for (let i = 0; i < b0.length; i++) {
+			if (b0[i] == 0) {
+				continue;
+			}
+			let x0 = i % 32;
+			let y0 = (i / 32) >>> 0;
+			c0.con.fillRect(x0,y0,1,1);
+		}
 	}
 }
 // dom
@@ -264,4 +512,3 @@ var binStr = function(nMask) {
 </html>
  
 
-	
