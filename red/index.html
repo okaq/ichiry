@@ -138,6 +138,28 @@ var sce = {
 		// each update create an eleven canvas block
 		// layout random on the field with margin
 		sce.d = {};
+	},
+	"noon": function() {
+		// eleven canvas block
+		sce.d.r = [];
+		sce.d.c = [];
+		sce.d.d = [];
+		let w0 = (32 + (d.h.m * 2)) >>> 0;
+		let h0 = (32 * (d.h.m * 2)) >>> 0;
+		let r0 = db.h.a[a.tick];
+		for (let i = 0; i < db.h.l; i++) {
+			let x0 = (w0 * i) >>> 0;
+			let x1 = (x0 + r0[2]) >>> 0;
+			let x2 = (x1 + db.h.m) >>> 0;
+			let y0 = (r0[3] + db.h.m) >>> 0;
+			sce.d.r[i] = [32,32,x2,y0];
+			sce.d.c[i] = dom.canvas(sce.d.r[i]);
+			sce.d.d[i] = [rgba.css([255,255,255,1.0]),rgba.css([0,0,0,1.0])];
+			dom.add(sce.d.d[i]);
+			sce.d.c[i].can.dataset.x = "text_" + i;
+			sce.d.c[i].can.addEventListener("click", sce.click, false);
+		}
+		// for bkgd add recy canvas
 	}
 }
 // data
