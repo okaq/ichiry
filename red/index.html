@@ -89,6 +89,9 @@ var a = {
 			window.clearInterval(a.id);
 			return;
 		}
+		db.flow();
+		sce.noon();
+		ren.elven();
 		a.tick = a.tick + 1;
 	}
 }
@@ -221,6 +224,16 @@ var db = {
 		db.h.l = 11;
 		db.h.w = ((32 + (db.h.m * 2)) * db.h.l) >>> 0;
 		db.h.h = (32 + (db.h.m * 2)) >>> 0;
+	},
+	"flow": function() {
+		db.h.a[a.tick] = db.rect();
+	},
+	"rect": function() {
+		let mx = sce.b.w - db.h.w;
+		let x0 = ((Math.random() * mx) + db.h.w) >>> 0;
+		let my = sce.b.h - db.h.h;
+		let y0 = ((Math.random() * my) + db.h.h) >>> 0;
+		return [db.h.w,db.h.h,x0,y0];
 	}
 }
 // render
