@@ -84,6 +84,7 @@ var a = {
 		a.id = window.setInterval(a.cyc5, 1000);
 	},
 	"cyc5": function() {
+		// console.log("tick count " + a.tick);
 		if (a.tick >= a.max) {
 			console.log("anim done");
 			window.clearInterval(a.id);
@@ -144,8 +145,9 @@ var sce = {
 		sce.d.r = [];
 		sce.d.c = [];
 		sce.d.d = [];
-		let w0 = (32 + (d.h.m * 2)) >>> 0;
-		let h0 = (32 * (d.h.m * 2)) >>> 0;
+		sce.d.t = [];
+		let w0 = (32 + (db.h.m * 2)) >>> 0;
+		let h0 = (32 * (db.h.m * 2)) >>> 0;
 		let r0 = db.h.a[a.tick];
 		for (let i = 0; i < db.h.l; i++) {
 			let x0 = (w0 * i) >>> 0;
@@ -155,9 +157,10 @@ var sce = {
 			sce.d.r[i] = [32,32,x2,y0];
 			sce.d.c[i] = dom.canvas(sce.d.r[i]);
 			sce.d.d[i] = [rgba.css([255,255,255,1.0]),rgba.css([0,0,0,1.0])];
-			dom.add(sce.d.d[i]);
+			dom.add(sce.d.c[i]);
 			sce.d.c[i].can.dataset.x = "text_" + i;
 			sce.d.c[i].can.addEventListener("click", sce.click, false);
+			sce.d.t[i] = db.h.b[i];
 		}
 		// for bkgd add recy canvas
 	}
@@ -249,6 +252,7 @@ var db = {
 	},
 	"flow": function() {
 		db.h.a[a.tick] = db.rect();
+		db.h.b = db.g[a.tick].split("");
 	},
 	"rect": function() {
 		let mx = sce.b.w - db.h.w;
@@ -285,6 +289,29 @@ var ren = {
 			let y0 = (i / 32) >>> 0;
 			let y1 = (y0 * 32) >>> 0;
 			sce.c.c.con.fillRect(x1,y1,32,32);
+		}
+	},
+	"elven": function() {
+		for (let i = 0; i < sce.d.c.length; i++) {
+			ren.clear(sce.d.c[i], sce.d.d[i][1]);
+			ren.bmp2(sce.d.t[i], sce.d.c[i], sce.d.d[i][0]);
+		}
+	},
+	"clear": function(c0,d0) {
+		c0.con.fillStyle = d0;
+		c0.con.fillRect(0,0,c0.can.width,c0.can.height);
+	},
+	"bmp2": function(d0,c0,d1) {
+		// fixed 32x32 canvas, 32x32 bit array
+		c0.con.fillStyle = d1;
+		let b0 = bmp.a[d0];
+		for (let i = 0; i < b0.length; i++) {
+			if (b0[i] == 0) {
+				continue;
+			}
+			let x0 = i % 32;
+			let y0 = (i / 32) >>> 0;
+			c0.con.fillRect(x0,y0,1,1);
 		}
 	}
 }
