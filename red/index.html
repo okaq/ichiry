@@ -43,7 +43,8 @@ var a = {
     "cyc": function() {
 	    console.log("clocks");
 	    // setup matrix test
-	    db.points();
+	    db.point();
+	    db.matrix();
     }
 }
 // scene
@@ -79,6 +80,22 @@ var db = {
 		db.b.y1 = 1080;
 		db.b.w = (db.b.x1 - db.b.x0);
 		db.b.h = (db.b.y1 - db.b.y0);
+
+		db.cloud();
+	},
+	"cloud": function() {
+		for (let i = 0; i < db.b.b; i++) {
+			db.b.a[i] = {};
+			db.b.a[i].x = ((Math.random() * db.b.w) + db.b.x0) >>> 0;
+			db.b.a[i].y = ((Math.random() * db.b.h) + db.b.y0) >>> 0;
+			db.b.a[i].z = 1;
+		}
+	},
+	"matrix": function() {
+		// 3x3 homogeneous 2D transforms
+		db.c = [];
+		// transformation history
+		// format [[0,0,1],[0,1,0],[1,0,0]]
 	}
 }
 // dom
