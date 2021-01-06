@@ -42,6 +42,8 @@ var a = {
     },
     "cyc": function() {
 	    console.log("clocks");
+	    // setup matrix test
+	    db.points();
     }
 }
 // scene
@@ -65,6 +67,18 @@ var db = {
 		db.a.i = db.a.a.toLocaleString('en-US',{timeZone:'America/Los_Angeles'});
 
 		console.log(db.a);
+	},
+	"point": function() {
+		// point cloud in 2D
+		db.b = {};
+		db.b.a = [];
+		db.b.b = 2048;
+		db.b.x0 = -1920;
+		db.b.x1 = 1920;
+		db.b.y0 = -1080;
+		db.b.y1 = 1080;
+		db.b.w = (db.b.x1 - db.b.x0);
+		db.b.h = (db.b.y1 - db.b.y0);
 	}
 }
 // dom
