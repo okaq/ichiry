@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=1920,height=1080,initial-scale=1" />
         <meta name="source" content="https://github.com/okaq/ichiry" />
         <meta name="creator" content="AQ<aq@okaq.com>" />
-        <meta name="date" content="2021-01-08" />
+        <meta name="date" content="2021-01-06" />
         <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAMklEQVR4nGKRNH/IQEvARFPTRy0YtWDUglELRi0YtWDUglELRi0YtWDUAioCQAAAAP//JGYBdI4ZOy8AAAAASUVORK5CYII=" />
         <style type="text/css">
             html,body{width:1920px;height:1080px;margin:0px;padding:0px;border:0px;background-color:rgba(255,255,255,1.0);}
@@ -41,7 +41,7 @@ var a = {
  
     },
     "cyc": function() {
-	    console.log("nano games");
+	    console.log("clocks");
 	    // setup matrix test
 	    db.point();
 	    db.matrix();
@@ -51,28 +51,58 @@ var a = {
 var sce = {
 	"init": function() {
 		sce.a = {};
-
-	},
-	"nano": function() {
-		sce.b = {};
-	},
-	"clock": function() {
-		// binary ticker
-		sce.c = {};
-	},
-	"canvas": function() {
-		// generator pane
-	},
-	"click": function(e) {
-		console.log(e);
 	}
 }
 // data
 var db = {
 	"init": function() {
 		db.a = {};
-		db.a.a = Date.now();
-		db.a.b = "nano games at peta scale";
+		db.a.e = Date.now();
+		db.a.a = new Date(db.a.e);
+		db.a.b = db.a.a.toISOString();
+		db.a.c = db.a.a.valueOf();
+		db.a.d = db.a.a.toLocaleString('en-US',{timeZone:'America/New_York'});
+		db.a.f = db.a.a.toLocaleString('en-US',{timeZone:'Europe/London'});
+		db.a.g = db.a.a.toLocaleString('en-US',{timeZone:'Asia/Kolkata'});
+		db.a.h = db.a.a.toLocaleString('en-US',{timeZone:'Asia/Tokyo'});
+		db.a.i = db.a.a.toLocaleString('en-US',{timeZone:'America/Los_Angeles'});
+
+		console.log(db.a);
+	},
+	"point": function() {
+		// point cloud in 2D
+		db.b = {};
+		db.b.a = [];
+		db.b.b = 2048;
+		db.b.x0 = -1920;
+		db.b.x1 = 1920;
+		db.b.y0 = -1080;
+		db.b.y1 = 1080;
+		db.b.w = (db.b.x1 - db.b.x0);
+		db.b.h = (db.b.y1 - db.b.y0);
+
+		db.cloud();
+	},
+	"cloud": function() {
+		for (let i = 0; i < db.b.b; i++) {
+			db.b.a[i] = {};
+			db.b.a[i].x = ((Math.random() * db.b.w) + db.b.x0) >>> 0;
+			db.b.a[i].y = ((Math.random() * db.b.h) + db.b.y0) >>> 0;
+			db.b.a[i].z = 1;
+		}
+	},
+	"matrix": function() {
+		// 3x3 homogeneous 2D transforms
+		db.c = [];
+		// transformation history
+		// format [[0,0,1],[0,1,0],[1,0,0]]
+
+		// random walk path, to test transform stack
+		// translation matrix = [[1,0,dx],[0,1,dy],[0,0,1]]
+		// x' = x + dx, y' = y + dy
+
+		// jump frequencies per tick, dx & dy
+		db.d = {};
 	}
 }
 // dom
