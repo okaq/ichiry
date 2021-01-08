@@ -73,6 +73,23 @@ var db = {
 		db.a = {};
 		db.a.a = Date.now();
 		db.a.b = "nano games at peta scale";
+
+		db.txt();
+	},
+	"txt": function() {
+		db.a.c = {};
+		db.a.c.w = 1920;
+		db.a.c.h = 1080;
+		db.a.c.px = 64;
+		db.a.c.py = 64;
+		db.a.c.mx = 2;
+		db.a.c.my = 2;
+		db.a.c.px2 = (db.a.c.px + (2 * db.a.c.mx)) >>> 0;
+		db.a.c.py2 = (db.a.c.py + (2 * db.a.c.my)) >>> 0;
+		db.a.c.nx = db.a.b.length;
+		db.a.c.nx2 = (db.a.c.px2 * db.a.c.nx) >>> 0;
+		db.a.c.mx2 = ((db.a.c.w - db.a.c.nx2) / 2) >>> 0;
+		db.a.c.my2 = ((db.a.c.h - db.a.c.py2) / 2) >>> 0;
 	}
 }
 // dom
