@@ -46,7 +46,23 @@ var a = {
 	    db.logo();
 	    sce.logo();
 	    ren.test();
-    }
+
+	    // new cycle
+	    a.tick = 0;
+	    a.max = 10000;
+	    a.id = window.setTimeout(a.cyc2, 1000);
+    },
+	"cyc2": function() {
+		console.log("tick count: " + a.tick);
+		if (a.tick >= a.max) {
+			console.log("anim done");
+			window.clearInterval(a.id);
+			return;
+		}
+		ren.logo();
+		// update clock
+		a.tick = a.tick + 1;
+	}
 }
 // scene
 var sce = {
