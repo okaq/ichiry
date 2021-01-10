@@ -50,7 +50,7 @@ var a = {
 	    // new cycle
 	    a.tick = 0;
 	    a.max = 10000;
-	    a.id = window.setTimeout(a.cyc2, 1000);
+	    a.id = window.setInterval(a.cyc2, 1000);
     },
 	"cyc2": function() {
 		console.log("tick count: " + a.tick);
@@ -131,6 +131,34 @@ var ren = {
 		// logo
 		sce.b.c.con.fillStyle = rgba.css([255,255,255,1.0]);
 		sce.b.c.con.fillRect(0,0,sce.b.c.can.width,sce.b.c.can.height);
+	},
+	"logo": function() {
+		// rand rgb
+		let t0 = db.a.b.split("");
+		for (let i = 0; i < t0.length; i++) {
+			if (t0[i] == " ") {
+				continue;
+			}
+			// rect area
+			let x0 = i * db.a.c.px2;
+			let y0 = 0;
+			let w0 = db.a.c.px2;
+			let h0 = db.a.c.py2;
+			// bkgd
+			sce.b.c.con.fillStyle = rgba.rand();
+			sce.b.c.con.fillRect(x0,y0,w0,h0);
+			// margin
+			let x1 = x0 + db.a.c.mx;
+			let y1 = y0 + db.a.c.my;
+			let w1 = w0 - (2 * db.a.c.mx);
+			let h1 = h0 - (2 * db.a.c.my);
+			sce.b.c.con.fillStyle = rgba.rand();
+			sce.b.c.con.fillRect(x1,y1,w1,h1);
+			// char
+		}
+	},
+	"logo2": function() {
+		// monochrome
 	}
 }
 // dom
