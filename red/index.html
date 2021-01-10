@@ -50,18 +50,27 @@ var a = {
 // scene
 var sce = {
 	"init": function() {
-		sce.a = {};
+		let r0 = [1920,1080,0,0];
+		let x0 = "bkgd";
+		sce.a = sce.canvas(r0,x0);
+		dom.add(sce.a);
 
 	},
 	"nano": function() {
+		let r0 = [db.a.c.nx2,db.a.c.py2,];
 		sce.b = {};
 	},
 	"clock": function() {
 		// binary ticker
 		sce.c = {};
 	},
-	"canvas": function() {
+	"canvas": function(r0,x0) {
 		// generator pane
+		let c0 = {};
+		c0.r = r0;
+		c0.c = dom.canvas(c0.r);
+		c0.c.can.dataset.x = x0;
+		c0.c.can.addEventListener("click", sce.click, false);
 	},
 	"click": function(e) {
 		console.log(e);
