@@ -43,8 +43,9 @@ var a = {
     "cyc": function() {
 	    console.log("nano games");
 	    // setup matrix test
-	    db.point();
-	    db.matrix();
+	    db.logo();
+	    sce.logo();
+	    ren.test();
     }
 }
 // scene
@@ -53,12 +54,14 @@ var sce = {
 		let r0 = [1920,1080,0,0];
 		let x0 = "bkgd";
 		sce.a = sce.canvas(r0,x0);
-		dom.add(sce.a);
+		dom.add(sce.a.c);
 
 	},
-	"nano": function() {
-		let r0 = [db.a.c.nx2,db.a.c.py2,];
-		sce.b = {};
+	"logo": function() {
+		let r0 = [db.a.c.nx2,db.a.c.py2,db.a.c.mx2,db.a.c.my2];
+		let x0 = "logo";
+		sce.b = sce.canvas(r0,x0);
+		dom.add(sce.b.c);
 	},
 	"clock": function() {
 		// binary ticker
@@ -71,6 +74,7 @@ var sce = {
 		c0.c = dom.canvas(c0.r);
 		c0.c.can.dataset.x = x0;
 		c0.c.can.addEventListener("click", sce.click, false);
+		return c0;
 	},
 	"click": function(e) {
 		console.log(e);
@@ -83,9 +87,9 @@ var db = {
 		db.a.a = Date.now();
 		db.a.b = "nano games at peta scale";
 
-		db.txt();
+		// db.txt();
 	},
-	"txt": function() {
+	"logo": function() {
 		db.a.c = {};
 		db.a.c.w = 1920;
 		db.a.c.h = 1080;
@@ -99,6 +103,18 @@ var db = {
 		db.a.c.nx2 = (db.a.c.px2 * db.a.c.nx) >>> 0;
 		db.a.c.mx2 = ((db.a.c.w - db.a.c.nx2) / 2) >>> 0;
 		db.a.c.my2 = ((db.a.c.h - db.a.c.py2) / 2) >>> 0;
+	}
+}
+// render
+var ren = {
+	"test": function() {
+		// bkgd
+		sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0]);
+		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+		
+		// logo
+		sce.b.c.con.fillStyle = rgba.css([255,255,255,1.0]);
+		sce.b.c.con.fillRect(0,0,sce.b.c.can.width,sce.b.c.can.height);
 	}
 }
 // dom
