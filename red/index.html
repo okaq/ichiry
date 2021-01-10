@@ -155,10 +155,30 @@ var ren = {
 			sce.b.c.con.fillStyle = rgba.rand();
 			sce.b.c.con.fillRect(x1,y1,w1,h1);
 			// char
+			let r0 = [w1,h1,x1,y1];
+			ren.txt(t0[i], r0);
 		}
 	},
 	"logo2": function() {
 		// monochrome
+	},
+	"txt": function(t0,r0) {
+		sce.b.c.con.fillStyle = rgba.rand();
+		let b0 = bmp.a[t0];
+		let w0 = (r0[0] / 32) >>> 0;
+		for (let i = 0; i < b0.length; i++) {
+			if (b0[i] == 0) {
+				continue;
+			}
+			let x0 = i % 32;
+			let y0 = (i / 32) >>> 0;
+			let x1 = x0 * w0;
+			let y1 = y0 * w0;
+			let x2 = x1 + r0[2];
+			let y2 = y1 + r0[3];
+			sce.b.c.con.fillRect(x2,y2,w0,w0);
+		}
+		// cartoony look
 	}
 }
 // dom
