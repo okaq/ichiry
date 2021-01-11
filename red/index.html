@@ -46,6 +46,9 @@ var a = {
 	    db.logo();
 	    sce.logo();
 	    ren.test();
+	    // clock init
+	    db.clock();
+	    sce.clock();
 
 	    // new cycle
 	    a.tick = 0;
@@ -119,6 +122,16 @@ var db = {
 		db.a.c.nx2 = (db.a.c.px2 * db.a.c.nx) >>> 0;
 		db.a.c.mx2 = ((db.a.c.w - db.a.c.nx2) / 2) >>> 0;
 		db.a.c.my2 = ((db.a.c.h - db.a.c.py2) / 2) >>> 0;
+	},
+	"clock": function() {
+		db.b = {};
+		db.b.a = Date.Now();
+		db.b.b = new Date(db.b.a);
+		db.b.c = db.b.b.toISOString();
+		db.b.d = db.b.b.valueOf();
+		db.b.e = db.b.b.toLocaleString('en-US',{timeZone:'America/New_York'});
+		console.log(db.b.e);
+		// get methods for year, month, day, hour, minute, second
 	}
 }
 // render
