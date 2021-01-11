@@ -125,13 +125,25 @@ var db = {
 	},
 	"clock": function() {
 		db.b = {};
-		db.b.a = Date.Now();
+		db.b.a = Date.now();
 		db.b.b = new Date(db.b.a);
 		db.b.c = db.b.b.toISOString();
 		db.b.d = db.b.b.valueOf();
 		db.b.e = db.b.b.toLocaleString('en-US',{timeZone:'America/New_York'});
 		console.log(db.b.e);
 		// get methods for year, month, day, hour, minute, second
+		db.parse();
+	},
+	"parse": function() {
+		// easy split
+		db.c = {};
+		db.c.a = db.b.e.split(",");
+		db.c.b = db.c.a[0].split("/");
+		db.c.c = db.c.a[1].split(" ");
+		db.c.d = db.c.c[1].split(":");
+		console.log(db.c);
+		// db.c.b = [month,day,year]
+		// db.c.d = [hour,minute,second]
 	}
 }
 // render
