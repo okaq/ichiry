@@ -85,6 +85,14 @@ var sce = {
 	"clock": function() {
 		// binary ticker
 		sce.c = {};
+		// six canvas panes of 32x32 pixel blocks
+		// lower third 1920 x 386
+		// year 2048 = 2^12
+		// month 12 = 2^4
+		// day 31 = 2^5
+		// hour 24 = 2^5
+		// minute 60 = 2^6
+		// second 60 = 2^6
 	},
 	"canvas": function(r0,x0) {
 		// generator pane
@@ -141,6 +149,9 @@ var db = {
 		db.c.b = db.c.a[0].split("/");
 		db.c.c = db.c.a[1].split(" ");
 		db.c.d = db.c.c[1].split(":");
+		db.c.e = db.c.b.concat(db.c.d);
+		db.c.f = [...db.c.e];
+		db.c.f = db.c.f.map(el => parseInt(el, 10));
 		console.log(db.c);
 		// db.c.b = [month,day,year]
 		// db.c.d = [hour,minute,second]
