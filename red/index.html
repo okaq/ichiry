@@ -93,6 +93,27 @@ var sce = {
 		// hour 24 = 2^5
 		// minute 60 = 2^6
 		// second 60 = 2^6
+		sce.c.year = {};
+		sce.c.year.a = 12;
+		sce.c.month = {};
+		sce.c.month.a = 4;
+		sce.c.day = {};
+		sce.c.day.a = 5;
+		sce.c.hour = {};
+		sce.c.hour.a = 5;
+		sce.c.minute = {};
+		sce.c.minute.a = 6;
+		sce.c.second = {};
+		sce.c.second.a = 6;
+		// keys
+		sce.d = [];
+		for (var k0 in sce.c) {
+			sce.d.push(k0);
+		}
+		console.log(sce.d);
+		sce.clock2();
+	},
+	"clock2": function() {
 	},
 	"canvas": function(r0,x0) {
 		// generator pane
