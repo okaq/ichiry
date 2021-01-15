@@ -121,6 +121,20 @@ var sce = {
 	"line": function(n0, x0, y0) {
 		// line of 32x32 blocks
 		// set margin and size
+		let m0 = 2;
+		let w0 = (32 + (2 * m0)) >>> 0;
+		// let y0 = 512 + 128;
+		let w0 = 32;
+		let h0 = 32;
+		let r0 = [];
+		for (let i = 0; i < n0; i++) {
+			let x1 = i * w0;
+			let x2 = x0 + m0;
+			let x3 = x0 + x2;
+			let r1 = [w0,h0,x3,y0];
+			r0.push(r1);
+		}
+		return r0;
 	},
 	"canvas": function(r0,x0) {
 		// generator pane
