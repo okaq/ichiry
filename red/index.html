@@ -114,9 +114,11 @@ var sce = {
 		sce.clock2();
 	},
 	"clock2": function() {
+		let y0 = 512 + 128;
 		// year scene
-		sce.c.year.r = [];
-		sce.c.year.c = [];
+		sce.c.year.r = sce.line(sce.c.year.a,0,y0);
+		sce.c.year.c = sce.c.year.r.map(el => dom.canvas(el));
+		console.log(sce.c.year);
 	},
 	"line": function(n0, x0, y0) {
 		// line of 32x32 blocks
