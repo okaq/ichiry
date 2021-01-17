@@ -149,6 +149,40 @@ var sce = {
 	},
 	"click": function(e) {
 		console.log(e);
+	}.
+	"inv": function() {
+		// 11x11 invader in top quad above text
+		let x0 = (1920 / 3) >>> 0;
+		let y0 = (1080 / 3) >>> 0;
+		sce.e = {};
+		sce.e.r = [x0,y0,x0,0];
+		sce.e.c = dom.canvas(sce.e.r);
+		dom.add(sce.e.c);
+		sce.e.d = [];
+		for (let i = 0; i < 7; i++) {
+			// cols
+			sce.e.d[i] = sce.elv();
+		}
+		for (let i = 7; i < 11; i++) {
+			// mirror
+			let i0 = i - 6;
+			let i1 = i - (2 * i0);
+			sce.e.d[i] = [...sce.e.d[i1]];
+		}
+		console.log(sce.e);
+	},
+	"elv": function() {
+		// eleven random bits for invaders
+		let r0 = [];
+		for (let i = 0; i < 11; i++) {
+			let f0 = Math.random();
+			if (f0 > 0.5) {
+				r0[i] = 1;
+			} else {
+				r0[i] = 0;
+			}
+		}
+		return r0;
 	}
 }
 // data
