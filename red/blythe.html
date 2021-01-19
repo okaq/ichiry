@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=1920,height=1080,initial-scale=1" />
         <meta name="source" content="https://github.com/okaq/ichiry" />
         <meta name="creator" content="AQ<aq@okaq.com>" />
-        <meta name="date" content="2021-01-20" />
+        <meta name="date" content="2021-01-08" />
         <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAMklEQVR4nGKRNH/IQEvARFPTRy0YtWDUglELRi0YtWDUglELRi0YtWDUAioCQAAAAP//JGYBdI4ZOy8AAAAASUVORK5CYII=" />
         <style type="text/css">
             html,body{width:1920px;height:1080px;margin:0px;padding:0px;border:0px;background-color:rgba(255,255,255,1.0);}
@@ -42,18 +42,257 @@ var a = {
     },
     "cyc": function() {
 	    console.log("nano games");
-    }
+	    // setup matrix test
+	    db.logo();
+	    sce.logo();
+	    ren.test();
+	    // clock init
+	    db.clock();
+	    sce.clock();
+
+	    // new cycle
+	    a.tick = 0;
+	    a.max = 10000;
+	    a.id = window.setInterval(a.cyc2, 1000);
+    },
+	"cyc2": function() {
+		console.log("tick count: " + a.tick);
+		if (a.tick >= a.max) {
+			console.log("anim done");
+			window.clearInterval(a.id);
+			return;
+		}
+		ren.logo();
+		// update clock
+		a.tick = a.tick + 1;
+	}
 }
 // scene
 var sce = {
 	"init": function() {
-		sce.a = {};
+		let r0 = [1920,1080,0,0];
+		let x0 = "bkgd";
+		sce.a = sce.canvas(r0,x0);
+		dom.add(sce.a.c);
+
+	},
+	"logo": function() {
+		let r0 = [db.a.c.nx2,db.a.c.py2,db.a.c.mx2,db.a.c.my2];
+		let x0 = "logo";
+		sce.b = sce.canvas(r0,x0);
+		dom.add(sce.b.c);
+	},
+	"clock": function() {
+		// binary ticker
+		sce.c = {};
+		// six canvas panes of 32x32 pixel blocks
+		// lower third 1920 x 386
+		// year 2048 = 2^12
+		// month 12 = 2^4
+		// day 31 = 2^5
+		// hour 24 = 2^5
+		// minute 60 = 2^6
+		// second 60 = 2^6
+		sce.c.year = {};
+		sce.c.year.a = 12;
+		sce.c.month = {};
+		sce.c.month.a = 4;
+		sce.c.day = {};
+		sce.c.day.a = 5;
+		sce.c.hour = {};
+		sce.c.hour.a = 5;
+		sce.c.minute = {};
+		sce.c.minute.a = 6;
+		sce.c.second = {};
+		sce.c.second.a = 6;
+		// keys
+		sce.d = [];
+		for (var k0 in sce.c) {
+			sce.d.push(k0);
+		}
+		console.log(sce.d);
+		sce.clock2();
+	},
+	"clock2": function() {
+		let y0 = 512 + 128;
+		// year scene
+		sce.c.year.r = sce.line(sce.c.year.a,0,y0);
+		sce.c.year.c = sce.c.year.r.map(el => dom.canvas(el));
+		console.log(sce.c.year);
+	},
+	"line": function(n0, x0, y0) {
+		// line of 32x32 blocks
+		// set margin and size
+		let m0 = 2;
+		let w0 = (32 + (2 * m0)) >>> 0;
+		// let y0 = 512 + 128;
+		let w0 = 32;
+		let h0 = 32;
+		let r0 = [];
+		for (let i = 0; i < n0; i++) {
+			let x1 = i * w0;
+			let x2 = x0 + m0;
+			let x3 = x0 + x2;
+			let r1 = [w0,h0,x3,y0];
+			r0.push(r1);
+		}
+		return r0;
+	},
+	"canvas": function(r0,x0) {
+		// generator pane
+		let c0 = {};
+		c0.r = r0;
+		c0.c = dom.canvas(c0.r);
+		c0.c.can.dataset.x = x0;
+		c0.c.can.addEventListener("click", sce.click, false);
+		return c0;
+	},
+	"click": function(e) {
+		console.log(e);
+	}.
+	"inv": function() {
+		// 11x11 invader in top quad above text
+		let x0 = (1920 / 3) >>> 0;
+		let y0 = (1080 / 3) >>> 0;
+		sce.e = {};
+		sce.e.r = [x0,y0,x0,0];
+		sce.e.c = dom.canvas(sce.e.r);
+		dom.add(sce.e.c);
+		sce.e.d = [];
+		for (let i = 0; i < 7; i++) {
+			// cols
+			sce.e.d[i] = sce.elv();
+		}
+		for (let i = 7; i < 11; i++) {
+			// mirror
+			let i0 = i - 6;
+			let i1 = i - (2 * i0);
+			sce.e.d[i] = [...sce.e.d[i1]];
+		}
+		console.log(sce.e);
+	},
+	"elv": function() {
+		// eleven random bits for invaders
+		let r0 = [];
+		for (let i = 0; i < 11; i++) {
+			let f0 = Math.random();
+			if (f0 > 0.5) {
+				r0[i] = 1;
+			} else {
+				r0[i] = 0;
+			}
+		}
+		return r0;
 	}
 }
 // data
 var db = {
 	"init": function() {
 		db.a = {};
+		db.a.a = Date.now();
+		db.a.b = "nano games at peta scale";
+
+		// db.txt();
+	},
+	"logo": function() {
+		db.a.c = {};
+		db.a.c.w = 1920;
+		db.a.c.h = 1080;
+		db.a.c.px = 64;
+		db.a.c.py = 64;
+		db.a.c.mx = 2;
+		db.a.c.my = 2;
+		db.a.c.px2 = (db.a.c.px + (2 * db.a.c.mx)) >>> 0;
+		db.a.c.py2 = (db.a.c.py + (2 * db.a.c.my)) >>> 0;
+		db.a.c.nx = db.a.b.length;
+		db.a.c.nx2 = (db.a.c.px2 * db.a.c.nx) >>> 0;
+		db.a.c.mx2 = ((db.a.c.w - db.a.c.nx2) / 2) >>> 0;
+		db.a.c.my2 = ((db.a.c.h - db.a.c.py2) / 2) >>> 0;
+	},
+	"clock": function() {
+		db.b = {};
+		db.b.a = Date.now();
+		db.b.b = new Date(db.b.a);
+		db.b.c = db.b.b.toISOString();
+		db.b.d = db.b.b.valueOf();
+		db.b.e = db.b.b.toLocaleString('en-US',{timeZone:'America/New_York'});
+		console.log(db.b.e);
+		// get methods for year, month, day, hour, minute, second
+		db.parse();
+	},
+	"parse": function() {
+		// easy split
+		db.c = {};
+		db.c.a = db.b.e.split(",");
+		db.c.b = db.c.a[0].split("/");
+		db.c.c = db.c.a[1].split(" ");
+		db.c.d = db.c.c[1].split(":");
+		db.c.e = db.c.b.concat(db.c.d);
+		db.c.f = [...db.c.e];
+		db.c.f = db.c.f.map(el => parseInt(el, 10));
+		console.log(db.c);
+		// db.c.b = [month,day,year]
+		// db.c.d = [hour,minute,second]
+	}
+}
+// render
+var ren = {
+	"test": function() {
+		// bkgd
+		sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0]);
+		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+		
+		// logo
+		sce.b.c.con.fillStyle = rgba.css([255,255,255,1.0]);
+		sce.b.c.con.fillRect(0,0,sce.b.c.can.width,sce.b.c.can.height);
+	},
+	"logo": function() {
+		// rand rgb
+		let t0 = db.a.b.split("");
+		for (let i = 0; i < t0.length; i++) {
+			if (t0[i] == " ") {
+				continue;
+			}
+			// rect area
+			let x0 = i * db.a.c.px2;
+			let y0 = 0;
+			let w0 = db.a.c.px2;
+			let h0 = db.a.c.py2;
+			// bkgd
+			sce.b.c.con.fillStyle = rgba.rand();
+			sce.b.c.con.fillRect(x0,y0,w0,h0);
+			// margin
+			let x1 = x0 + db.a.c.mx;
+			let y1 = y0 + db.a.c.my;
+			let w1 = w0 - (2 * db.a.c.mx);
+			let h1 = h0 - (2 * db.a.c.my);
+			sce.b.c.con.fillStyle = rgba.rand();
+			sce.b.c.con.fillRect(x1,y1,w1,h1);
+			// char
+			let r0 = [w1,h1,x1,y1];
+			ren.txt(t0[i], r0);
+		}
+	},
+	"logo2": function() {
+		// monochrome
+	},
+	"txt": function(t0,r0) {
+		sce.b.c.con.fillStyle = rgba.rand();
+		let b0 = bmp.a[t0];
+		let w0 = (r0[0] / 32) >>> 0;
+		for (let i = 0; i < b0.length; i++) {
+			if (b0[i] == 0) {
+				continue;
+			}
+			let x0 = i % 32;
+			let y0 = (i / 32) >>> 0;
+			let x1 = x0 * w0;
+			let y1 = y0 * w0;
+			let x2 = x1 + r0[2];
+			let y2 = y1 + r0[3];
+			sce.b.c.con.fillRect(x2,y2,w0,w0);
+		}
+		// cartoony look
 	}
 }
 // dom
@@ -253,5 +492,4 @@ var binStr = function(nMask) {
 </html>
  
 
-	
 	
