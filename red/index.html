@@ -42,6 +42,7 @@ var a = {
     },
     "cyc": function() {
 	    console.log("nano games");
+	    net.noto();
     }
 }
 // scene
@@ -54,6 +55,26 @@ var sce = {
 var db = {
 	"init": function() {
 		db.a = {};
+	}
+}
+// xhr
+var net = {
+	"noto": function() {
+		window.fetch("/noto")
+			.then(res => res.json())
+			.then(json => net.a = json; net.stride());
+	},
+	"stride": function() {
+		// decode as needed
+		// bitmaps
+		net.b = {};
+		// keys
+		net.c = [];
+		for (var k0 in net.a) {
+			net.c.push(k0);
+			net.b[k0] = null;
+		}
+		console.log(net.c.length);
 	}
 }
 // dom
