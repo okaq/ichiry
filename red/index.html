@@ -43,12 +43,22 @@ var a = {
     "cyc": function() {
 	    console.log("nano games");
 	    net.noto();
+	    // 888 bitmaps in emoji collection
+	    ren.clear();
     }
 }
 // scene
 var sce = {
 	"init": function() {
 		sce.a = {};
+		sce.a.r = [1920,1080,0,0];
+		sce.a.c = dom.canvas(sce.a.r);
+		dom.add(sce.a.c);
+		sce.a.c.can.dataset.x = "bkgd";
+		sce.a.c.can.addEventListener("click", sce.click, false);
+	},
+	"click": function(e) {
+		console.log(e);
 	}
 }
 // data
@@ -62,7 +72,7 @@ var net = {
 	"noto": function() {
 		window.fetch("/noto")
 			.then(res => res.json())
-			.then(json => net.a = json; net.stride());
+			.then(json => {net.a = json; net.stride()});
 	},
 	"stride": function() {
 		// decode as needed
@@ -75,6 +85,13 @@ var net = {
 			net.b[k0] = null;
 		}
 		console.log(net.c.length);
+	}
+}
+// render
+var ren = {
+	"clear": function() {
+		sce.a.c.con.fillStyle = rgba.rand();
+		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
 	}
 }
 // dom
@@ -104,21 +121,21 @@ var dom = {
 // bitmap
 var bmp = {
     "init": function() {
-        // decode guji bitmap font
+        // decode gugi bitmap font
         bmp.a = {};
         var x0 = 0;
-        for (var k in guji) {
+        for (var k in gugi) {
             x0++;
-            var s0 = oxy[k];
-            var s1 = k[4];
+            var s0 = gugi[k];
+            var s1 = k[0];
             var b0 = base64DecToArr(s0);
             bmp.a[s1] = bmp.exp(b0);
         }
-        console.log("bmp guji font decoded: " + x0 + " chars");
+        console.log("bmp gugi font decoded: " + x0 + " chars");
         console.log(bmp);
         var s0 = (bmp.a[0].length);
         var s1 = Math.sqrt(s0);
-        console.log("bmp guji size: " + s0 + " (" + s1 + "x" + s1 + ")");
+        console.log("bmp gugi size: " + s0 + " (" + s1 + "x" + s1 + ")");
     },
     "exp": function(b0) {
         // expansion of uint8array
