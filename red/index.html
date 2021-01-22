@@ -75,6 +75,23 @@ var db = {
 		// rand bitmap canvas
 	}
 }
+// text
+var txt = {
+	"parse": function(t0) {
+		// helper for gugi font
+		let t1 = t0.toUpperCase();
+		let t2 = t1.split("");
+		// test presence
+		return t2;
+	},
+	"rect": function(t0, x0, y0) {
+		// input char array
+		let w0 = t0.length;
+		let w1 = t0 * 32;
+		let r0 = [w1,32,x0,y0];
+		return r0;
+	}
+}
 // xhr
 var net = {
 	"noto": function() {
