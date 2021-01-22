@@ -45,6 +45,9 @@ var a = {
 	    net.noto();
 	    // 888 bitmaps in emoji collection
 	    ren.clear();
+
+	    txt.test();
+	    txt.body();
     }
 }
 // scene
@@ -73,6 +76,9 @@ var db = {
 		db.a = {};
 		// rand text box
 		// rand bitmap canvas
+
+		// tick event handler
+		// behavior tree for scene change
 	}
 }
 // text
@@ -81,7 +87,7 @@ var txt = {
 		// helper for gugi font
 		let t1 = t0.toUpperCase();
 		let t2 = t1.split("");
-		// test presence
+		// test presence with filter
 		return t2;
 	},
 	"rect": function(t0, x0, y0) {
@@ -90,6 +96,22 @@ var txt = {
 		let w1 = t0 * 32;
 		let r0 = [w1,32,x0,y0];
 		return r0;
+	},
+	"test": function() {
+		let t0 = [];
+		t0[0] = "steeplechase";
+		t0[1] = "marmaduke";
+		t0[2] = "okaq2021";
+		let t1 = t0.map(el => { console.log(el); return txt.parse(el); });
+		console.log(t1);
+	},
+	"body": function() {
+		txt.a = {};
+		txt.a.a = "nano games at peta scale";
+		txt.a.b = txt.parse(txt.a.a);
+		let x0 = (Math.random() * 1800) >>> 0;
+		let y0 = (Math.random() * 1000) >>> 0
+		txt.a.c = txt.rect(txt.a.b, x0, y0);
 	}
 }
 // xhr
