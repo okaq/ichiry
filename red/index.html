@@ -48,7 +48,22 @@ var a = {
 
 	    txt.test();
 	    txt.body();
-    }
+
+	    // new cycle
+	    a.tick = 0; 
+	    a.max = 32;
+	    a.id = window.setInterval(a.cyc2, 1000);
+    },
+	"cyc2": function() {
+		console.log("tick count: " + a.tick)
+		if (a.tick >= a.max) {
+			console.log("anim done");
+			window.clearInterval(a.id);
+			return;
+		}
+		ren.blob();
+		a.tick = a.tick + 1;
+	}
 }
 // scene
 var sce = {
@@ -170,6 +185,10 @@ var net = {
 var ren = {
 	"clear": function() {
 		sce.a.c.con.fillStyle = rgba.rand();
+		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+	},
+	"blob": function() {
+		sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0);
 		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
 	}
 }
