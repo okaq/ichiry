@@ -63,7 +63,9 @@ var a = {
 		}
 		ren.blob();
 		// rand text
-
+		txt.body2();
+		sce.brim();
+		
 		a.tick = a.tick + 1;
 	}
 }
@@ -85,6 +87,19 @@ var sce = {
 	},
 	"bitmap": function(k0, r0) {
 		// add bitmap canvas to current scene
+	},
+	"brim": function() {
+		// add the new text rect canvas 
+		// to the current scene
+		sce.b = {};
+		sce.b.r = txt.c.d;
+		sce.b.c = dom.canvas(sce.b.r);
+		dom.add(sce.b.c);
+		sce.a.c.can.dataset.x = "txt";
+		sce.a.c.can.addEventListener("click", sce.click, false);
+
+		// nice pattern: update data in db
+		// populate canvas scene objects in manager
 	}
 }
 // data
