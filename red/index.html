@@ -63,11 +63,15 @@ var a = {
 			return;
 		}
 		ren.blob();
+
 		// rand text
 		txt.body2();
 		sce.brim();
 		ren.pile();
 		ren.moat();
+
+		// rand emoji
+		emo.pick();
 		
 		a.tick = a.tick + 1;
 	}
@@ -188,6 +192,22 @@ var txt = {
 		let x0 = (Math.random() * 1800) >>> 0;
 		let y0 = (Math.random() * 1000) >>> 0;
 		txt.c.d = txt.rect(txt.c.c, x0, y0);
+	}
+}
+// emoji
+var emo = {
+	"pick": function() {
+		// per frame key choose
+		// singleton logic
+		if (!emo.a) { emo.a = {}; };
+		// rand bitmap
+		emo.a.a = (Math.random() * net.c.length) >>> 0;
+		emo.a.b = net.c[emo.a.a];
+		// decode on the fly
+		emo.a.c = net.a[emo.a.b];
+		emo.a.d = bmp.exp(base64DecToArr(emo.a.c));
+		if (!net.b[emo.a.b]) { net.b[emo.a.b] = emo.a.d };
+		console.log(emo.a);
 	}
 }
 // xhr
