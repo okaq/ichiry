@@ -48,6 +48,7 @@ var a = {
 
 	    txt.test();
 	    txt.body();
+	    txt.elf();
 
 	    // new cycle
 	    a.tick = 0; 
@@ -65,6 +66,7 @@ var a = {
 		// rand text
 		txt.body2();
 		sce.brim();
+		ren.pile();
 		
 		a.tick = a.tick + 1;
 	}
@@ -125,7 +127,7 @@ var txt = {
 	"rect": function(t0, x0, y0) {
 		// input char array
 		let w0 = t0.length;
-		let w1 = t0 * 32;
+		let w1 = w0 * 32;
 		let r0 = [w1,32,x0,y0];
 		return r0;
 	},
@@ -214,8 +216,12 @@ var ren = {
 		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
 	},
 	"blob": function() {
-		sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0);
+		sce.a.c.con.fillStyle = rgba.css([0,0,0,1.0]);
 		sce.a.c.con.fillRect(0,0,sce.a.c.can.width,sce.a.c.can.height);
+	},
+	"pile": function() {
+		sce.b.c.con.fillStyle = rgba.rand();
+		sce.b.c.con.fillRect(0,0,sce.b.c.can.width,sce.b.c.can.height);
 	}
 }
 // dom
