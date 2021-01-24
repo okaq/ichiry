@@ -67,6 +67,7 @@ var a = {
 		txt.body2();
 		sce.brim();
 		ren.pile();
+		ren.moat();
 		
 		a.tick = a.tick + 1;
 	}
@@ -222,6 +223,29 @@ var ren = {
 	"pile": function() {
 		sce.b.c.con.fillStyle = rgba.rand();
 		sce.b.c.con.fillRect(0,0,sce.b.c.can.width,sce.b.c.can.height);
+	},
+	"moat": function() {
+		// eleven letter word in current txt canvas
+		sce.b.c.con.fillStyle = rgba.rand();
+		for (let i = 0; i < txt.c.c.length; i++) {
+			let t1 = txt.c.c[i];
+			let b0 = bmp.a[t1];
+			let x0 = (32 * i) >>> 0;
+			ren.char(b0, x0);
+		}
+	},
+	"char": function(b0, x0) {
+		for (let i = 0; i < b0.length; i++) {
+			if (b0[i] == 0) {
+				continue;
+			}
+			let x1 = i % 32;
+			let x2 = (x1 + x0) >>> 0;
+			let y0 = (i / 32) >>> 0;
+			sce.b.c.con.fillRect(x2,y0,1,1);
+		}
+		// scene manager renders current scene in graph
+		// shading data contained in dataset
 	}
 }
 // dom
