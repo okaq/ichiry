@@ -72,6 +72,7 @@ var a = {
 
 		// rand emoji
 		emo.pick();
+		emo.square();
 		
 		a.tick = a.tick + 1;
 	}
@@ -208,6 +209,16 @@ var emo = {
 		emo.a.d = bmp.exp(base64DecToArr(emo.a.c));
 		if (!net.b[emo.a.b]) { net.b[emo.a.b] = emo.a.d };
 		console.log(emo.a);
+	},
+	"square": function() {
+		// rand rect for emoji bitmap
+		emo.b = {};
+		emo.b.a = [];
+		emo.b.a[0] = 64;
+		emo.b.a[1] = 64;
+		emo.b.a[2] = (Math.random() * 1800) >>> 0;
+		emo.b.a[3] = (Math.random() * 900) >>> 0;
+		// ballistics data
 	}
 }
 // xhr
