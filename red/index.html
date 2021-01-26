@@ -73,6 +73,9 @@ var a = {
 		// rand emoji
 		emo.pick();
 		emo.square();
+		sce.square();
+		ren.square();
+		ren.emo();
 		
 		a.tick = a.tick + 1;
 	}
@@ -108,6 +111,15 @@ var sce = {
 
 		// nice pattern: update data in db
 		// populate canvas scene objects in manager
+	},
+	"square": function() {
+		// emoji canvas
+		sce.c = {};
+		sce.c.r = emo.b.a;
+		sce.c.c = dom.canvas(sce.c.r);
+		dom.add(sce.c.c);		
+		sce.c.c.can.dataset.x = "emo";
+		sce.c.c.can.addEventListener("click", sce.click, false);
 	}
 }
 // data
@@ -190,8 +202,8 @@ var txt = {
 		txt.c.a = (Math.random() * txt.b.length) >>> 0;
 		txt.c.b = txt.b[txt.c.a];
 		txt.c.c = txt.parse(txt.c.b);
-		let x0 = (Math.random() * 1800) >>> 0;
-		let y0 = (Math.random() * 1000) >>> 0;
+		let x0 = (Math.random() * 1500) >>> 0;
+		let y0 = (Math.random() * 900) >>> 0;
 		txt.c.d = txt.rect(txt.c.c, x0, y0);
 	}
 }
@@ -216,7 +228,7 @@ var emo = {
 		emo.b.a = [];
 		emo.b.a[0] = 64;
 		emo.b.a[1] = 64;
-		emo.b.a[2] = (Math.random() * 1800) >>> 0;
+		emo.b.a[2] = (Math.random() * 1500) >>> 0;
 		emo.b.a[3] = (Math.random() * 900) >>> 0;
 		// ballistics data
 	}
@@ -277,6 +289,14 @@ var ren = {
 		}
 		// scene manager renders current scene in graph
 		// shading data contained in dataset
+	},
+	"square": function() {
+		sce.c.c.con.fillStyle = rgba.rand();
+		sce.c.c.con.fillRect(0,0,sce.c.c.can.width,sce.c.c.can.height);
+	
+	},
+	"emo": function() {
+	
 	}
 }
 // dom
