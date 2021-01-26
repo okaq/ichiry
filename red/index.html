@@ -293,10 +293,19 @@ var ren = {
 	"square": function() {
 		sce.c.c.con.fillStyle = rgba.rand();
 		sce.c.c.con.fillRect(0,0,sce.c.c.can.width,sce.c.c.can.height);
-	
 	},
 	"emo": function() {
-	
+		sce.c.c.con.fillStyle = rgba.rand();
+		for (let i = 0; i < emo.a.d.length; i++) {
+			if (emo.a.d[i] == 0) {
+				continue;
+			}
+			let x0 = i % 32;
+			let x1 = x0 * 2;
+			let y0 = (i / 32) >>> 0;
+			let y1 = y0 * 2;
+			sce.c.c.con.fillRect(x1,y1,2,2);
+		}
 	}
 }
 // dom
